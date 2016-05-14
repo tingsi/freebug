@@ -67,7 +67,7 @@ CREATE TABLE `BugInfo` (
   KEY `Resolution` (`Resolution`),
   KEY `ClosedBy` (`ClosedBy`),
   KEY `LastEditedBy` (`LastEditedBy`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `CaseInfo` (
   `CaseID` mediumint(8) unsigned NOT NULL auto_increment,
   `ProjectID` smallint(5) unsigned NOT NULL default '0',
@@ -114,7 +114,7 @@ CREATE TABLE `CaseInfo` (
   KEY `AssignedTo` (`AssignedTo`),
   KEY `CaseKeyword` (`CaseKeyword`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 ALTER TABLE `CaseInfo` ADD `DisplayOrder` tinyint(3) unsigned NOT NULL default 0;
 
@@ -157,7 +157,7 @@ CREATE TABLE `ResultInfo` (
   KEY `OpenedBy` (`OpenedBy`),
   KEY `AssignedTo` (`AssignedTo`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestAction` (
   `ActionID` mediumint(8) unsigned NOT NULL auto_increment,
   `ActionTarget` enum('Bug','Case','Result') NOT NULL default 'Bug',
@@ -168,7 +168,7 @@ CREATE TABLE `TestAction` (
   `ActionNote` text,
   PRIMARY KEY  (`ActionID`),
   KEY `Action` (`ActionTarget`,`IdValue`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestFile` (
   `FileID` int(10) unsigned NOT NULL auto_increment,
   `ActionID` mediumint(8) unsigned NOT NULL default '0',
@@ -179,7 +179,7 @@ CREATE TABLE `TestFile` (
   `IsDroped` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`FileID`),
   KEY `ActionID` (`ActionID`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestHistory` (
   `HistoryID` mediumint(8) unsigned NOT NULL auto_increment,
   `ActionID` mediumint(8) unsigned NOT NULL default '0',
@@ -188,7 +188,7 @@ CREATE TABLE `TestHistory` (
   `NewValue` text,
   PRIMARY KEY  (`HistoryID`),
   KEY `ActionID` (`ActionID`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestModule` (
   `ModuleID` int(10) unsigned NOT NULL auto_increment,
   `ModuleType` enum('Bug','Case') default 'Bug',
@@ -208,7 +208,7 @@ CREATE TABLE `TestModule` (
   KEY `ParentID` (`ParentID`),
   KEY `DisplayOrder` (`DisplayOrder`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestProject` (
   `ProjectID` smallint(5) unsigned NOT NULL auto_increment,
   `ProjectName` varchar(100) NOT NULL default '',
@@ -228,7 +228,7 @@ CREATE TABLE `TestProject` (
   KEY `ProjectName` (`ProjectName`),
   KEY `DisplayOrder` (`DisplayOrder`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestUser` (
   `UserID` smallint(4) NOT NULL auto_increment,
   `UserName` varchar(30) NOT NULL default '',
@@ -244,7 +244,7 @@ CREATE TABLE `TestUser` (
   `IsDroped` enum('1','0') NOT NULL default '0',
   `AuthMode` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`UserID`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestUserLog` (
   `LogID` mediumint(8) unsigned NOT NULL auto_increment,
   `UserName` varchar(30) NOT NULL default '',
@@ -252,7 +252,7 @@ CREATE TABLE `TestUserLog` (
   `LoginTime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`LogID`),
   KEY `UserName` (`UserName`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestUserQuery` (
   `QueryID` int(10) unsigned NOT NULL auto_increment,
   `UserName` varchar(30) NOT NULL default '',
@@ -268,14 +268,14 @@ CREATE TABLE `TestUserQuery` (
   PRIMARY KEY  (`QueryID`),
   KEY `UserName` (`UserName`),
   KEY `QueryType` (`QueryType`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestOptions` (
   `OptionId` bigint(20) NOT NULL auto_increment,
   `OptionName` varchar(64) NOT NULL default '',
   `OptionValue` longtext NOT NULL,
   PRIMARY KEY  (`OptionID`,`OptionName`),
   KEY `OptionName` (`OptionName`)
-) Type=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 CREATE TABLE `TestGroup` ( 
   `GroupID` smallint(5) unsigned NOT NULL auto_increment,
   `GroupName` varchar(60) NOT NULL default '', 
@@ -286,7 +286,7 @@ CREATE TABLE `TestGroup` (
   `LastEditedBy` varchar(30) default NULL, 
   `LastDate` datetime NOT NULL default '0000-00-00 00:00:00', 
   PRIMARY KEY  (`GroupID`)
-) Type=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 EOT;
 
 $BugFreeUpgrade1Sql = <<<EOT
@@ -430,7 +430,7 @@ CREATE TABLE `CaseInfo` (
   KEY `AssignedTo` (`AssignedTo`),
   KEY `CaseKeyword` (`CaseKeyword`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 CREATE TABLE `ResultInfo` (
   `ResultID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -470,7 +470,7 @@ CREATE TABLE `ResultInfo` (
   KEY `OpenedBy` (`OpenedBy`),
   KEY `AssignedTo` (`AssignedTo`),
   KEY `IsDroped` (`IsDroped`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 CREATE TABLE `TestAction` (
   `ActionID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -482,7 +482,7 @@ CREATE TABLE `TestAction` (
   `ActionNote` text NOT NULL default '',
   PRIMARY KEY  (`ActionID`),
   KEY `Action` (`ActionTarget`,`IdValue`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 CREATE TABLE `TestFile` (
   `FileID` int(10) unsigned NOT NULL auto_increment,
@@ -494,7 +494,7 @@ CREATE TABLE `TestFile` (
   `IsDroped` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`FileID`),
   KEY `ActionID` (`ActionID`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 CREATE TABLE `TestHistory` (
   `HistoryID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -504,7 +504,7 @@ CREATE TABLE `TestHistory` (
   `NewValue` text NOT NULL default '',
   PRIMARY KEY  (`HistoryID`),
   KEY `ActionID` (`ActionID`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 
 CREATE TABLE `TestUserLog` (
   `LogID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -513,7 +513,7 @@ CREATE TABLE `TestUserLog` (
   `LoginTime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`LogID`),
   KEY `UserName` (`UserName`)
-) TYPE=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 EOT;
 
 $BugFreeUpgrade2Sql = <<<EOT
@@ -523,7 +523,7 @@ CREATE TABLE `TestOptions` (
   `OptionValue` longtext NOT NULL,
   PRIMARY KEY  (`OptionID`,`OptionName`),
   KEY `OptionName` (`OptionName`)
-) Type=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 EOT;
 
 $BugFree2AddGroupSql = <<<EOT
@@ -537,6 +537,6 @@ CREATE TABLE `TestGroup` (
   `LastEditedBy` varchar(30) default NULL, 
   `LastDate` datetime NOT NULL default '0000-00-00 00:00:00', 
   PRIMARY KEY  (`GroupID`)
-) Type=MyISAM $CharSetCollate;
+) ENGINE=MyISAM $CharSetCollate;
 EOT;
 ?>
