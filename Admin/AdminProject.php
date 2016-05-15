@@ -33,7 +33,7 @@ else
     {
         baseJudgeAdminUserLogin('SysAdmin');
         $IsDroped = (int)!$_GET['IsDroped'];
-        dbUpdateRow('TestProject', 'IsDroped', "'$IsDroped'", 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) ."'",'LastDate', 'now()', "ProjectID = {$_GET[ProjectID]}");
+        dbUpdateRow('TestProject', 'IsDroped', "'$IsDroped'", 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) ."'",'LastDate', 'now()', "ProjectID = {$_GET[ProjectID]}");
         dbUpdateRow('TestModule', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
         dbUpdateRow('BugInfo', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
         dbUpdateRow('CaseInfo', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
@@ -45,7 +45,7 @@ else
     }
     if($_SESSION['TestIsProjectAdmin'])
     {
-        $ProjectInfo = current(testGetProjectList("ProjectID = '{$_GET[ProjectID]}' AND ProjectManagers LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($_SESSION['TestUserName'])) . ",%'"));
+        $ProjectInfo = current(testGetProjectList("ProjectID = '{$_GET[ProjectID]}' AND ProjectManagers LIKE '%," . my_escape_string(my_escape_string($_SESSION['TestUserName'])) . ",%'"));
     }
     elseif($_SESSION['TestIsAdmin'])
     {

@@ -294,7 +294,7 @@ function apiEditItem($ItemType, $FieldsValue, $RawItemInfo)
         $RawItemInfo['ActionType'] = $bfUser->Param['ActionType'];
     }
  
-    $RawItemInfo['TestUserName'] = mysql_real_escape_string($_SESSION['TestUserName']);
+    $RawItemInfo['TestUserName'] = my_escape_string($_SESSION['TestUserName']);
     $RawItemInfo['LastActionID'] = $LastActionID;
     $EditFunction  = 'testEdit' . $ItemType;
     $ActionInfo = $EditFunction($RawItemInfo);
@@ -333,7 +333,7 @@ function apiAddItem($ItemType, $FieldsValue)
         $ParamValue = bfIconv($Charset, 'UTF-8', $bfUser->Param[$FieldName]);
         $ItemInfo[$FieldName] = $ParamValue != '' ? $ParamValue : $DefaultValue;
     }
-    $ItemInfo['TestUserName'] = mysql_real_escape_string($_SESSION['TestUserName']);
+    $ItemInfo['TestUserName'] = my_escape_string($_SESSION['TestUserName']);
     
     $AddFunction  = 'testOpen' . $ItemType;
     $ActionInfo = $AddFunction($ItemInfo);
@@ -341,4 +341,3 @@ function apiAddItem($ItemType, $FieldsValue)
     //print_r($ActionInfo);
     return $ID;
 }
-?>

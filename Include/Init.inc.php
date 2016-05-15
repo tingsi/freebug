@@ -56,7 +56,7 @@ define(BF_COOKIE_PATH, $_CFG['BasePath'] . '/');
 require(REAL_ROOT_PATH . '/Include/FuncMain.inc.php');                      // Functions file.
 require(REAL_ROOT_PATH . '/Include/FuncModel.inc.php');                     // Functions file.
 require(REAL_ROOT_PATH . '/Include/Class/Page.class.php');                  // Page class.
-require(REAL_ROOT_PATH . '/Include/Class/ADOLite/adodb.inc.php');           // ADO class.
+//require(REAL_ROOT_PATH . '/Include/Class/ADOLite/adodb.inc.php');           // ADO class.
 require(REAL_ROOT_PATH . '/Include/Class/TemplateLite/class.template.php'); // Smarty class.
 
 /* Set the language. */
@@ -78,10 +78,10 @@ define ('XAJAX_DEFAULT_CHAR_ENCODING', $_LANG['Charset']);
 require(REAL_ROOT_PATH . "/Include/Class/Xajax/xajax.inc.php");       // xajax class.
 
 /* Connect to BugFree database server and return the global DB handler -- $MyDB which is used anywhere and set the FETCH_MODE to ASSOC. */
-$MyDB = &ADONewConnection('mysql', 'pear');
-$DBResult = $MyDB->Connect($_CFG['DB']['Host'], $_CFG['DB']['User'], $_CFG['DB']['Password'], $_CFG['DB']['Database']);
-if(!$DBResult)
-{
+$MyDB = new mysqli($_CFG['DB']['Host'], $_CFG['DB']['User'], $_CFG['DB']['Password'], $_CFG['DB']['Database']);
+
+/* check connection */
+if ($MyDB->connect_errno) {
     if(!preg_match('/install/i', $_SERVER['PHP_SELF']))
     {
         jsGoTo($_CFG["BaseURL"] . "/install.php","top");
@@ -89,25 +89,14 @@ if(!$DBResult)
     }
 }
 
-$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-$MyDB->debug_console = true;
 
-$_CFG['Mysql4.1.0Plus'] = true;
-
-if($_CFG['DBCharset'] != '' && $_CFG['Mysql4.1.0Plus'])
-{
-    $MyDB->Query("SET NAMES {$_CFG['DBCharset']}");
-}
+if($_CFG['DBCharset']) $MyDB->query("SET NAMES {$_CFG['DBCharset']}");
 
 /* Connect to validating database if it's different from BugFree database and return the global DB handler --$MyUserDB. */
 if(!empty($_CFG['UserDB']))
 {
-    $MyUserDB = &ADONewConnection('mysql', 'pear');
-    $MyUserDB->NConnect($_CFG['UserDB']['Host'], $_CFG['UserDB']['User'], $_CFG['UserDB']['Password'], $_CFG['UserDB']['Database']);
-    if($_CFG['DBCharset'] == 'UTF8')
-    {
-        $MyUserDB->Query("SET NAMES UTF8");
-    }
+    $MyUserDB = new mysqli($_CFG['UserDB']['Host'], $_CFG['UserDB']['User'], $_CFG['UserDB']['Password'], $_CFG['UserDB']['Database']);
+    if($_CFG['DBCharset'] == 'UTF8') $MyUserDB->Query("SET NAMES UTF8");
 }
 register_shutdown_function('sysCloseDB');
 
@@ -193,4 +182,3 @@ if(preg_match('/Login.php|Logout/i', $_SERVER['PHP_SELF']) && $_SESSION['LoginJu
     $_SESSION['LoginJumpURI'] = 'index.php';
 }
 
-?>

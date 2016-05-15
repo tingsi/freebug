@@ -48,7 +48,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
 
     if($DBName == 'MyDB')
     {
-        $Where = "{$_CFG[UserTable][UserName]} = '" . mysql_real_escape_string($TestUserName) . "'" . " AND IsDroped = '0'";
+        $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "'" . " AND IsDroped = '0'";
         $DBTestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email, AuthMode",  $Where , $$DBName);
         if(empty($DBTestUserInfo))
         {
@@ -75,9 +75,9 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                     dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$TestUserInfo[RealName]}'"
                                                            , 'UserPassword', "'{$TestUserPWD}'"
                                                            , 'Email', "'{$TestUserInfo[Email]}'"
-                                                           , 'LastEditedBy', "'" . mysql_real_escape_string($TestUserInfo['UserName']) . "'"
+                                                           , 'LastEditedBy', "'" . my_escape_string($TestUserInfo['UserName']) . "'"
                                                            , 'LastDate', 'now()'
-                                                           , "UserName = '" . mysql_real_escape_string($TestUserName) ."'");
+                                                           , "UserName = '" . my_escape_string($TestUserName) ."'");
                 }
             }
             else
@@ -87,7 +87,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                     $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
                 }
 
-                $Where = "{$_CFG[UserTable][UserName]} = '" . mysql_real_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
+                $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
                 $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email"
                                                         ,  $Where , $$DBName);
             }
@@ -100,7 +100,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
             $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
         }
 
-        $Where = "{$_CFG[UserTable][UserName]} = '" . mysql_real_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
+        $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
         $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email"
                                                         ,  $Where , $$DBName);
     }
@@ -313,9 +313,9 @@ function baseJudgeIsAdmin($UserName, $AdminType = 'SysAdmin')
     }
     if($AdminType == 'ProjectAdmin')
     {
-        $UserName = mysql_real_escape_string($UserName);
+        $UserName = my_escape_string($UserName);
 
-        $ProjectList = dbGetList('TestProject', '', "ProjectManagers LIKE '%," . mysql_real_escape_string($UserName) . ",%'");
+        $ProjectList = dbGetList('TestProject', '', "ProjectManagers LIKE '%," . my_escape_string($UserName) . ",%'");
         if(count($ProjectList) > 0)
         {
             return true;
@@ -325,7 +325,7 @@ function baseJudgeIsAdmin($UserName, $AdminType = 'SysAdmin')
         {
             return true;
         }
-        $GroupList = dbGetList('TestGroup', '', "GroupManagers LIKE '%," . mysql_real_escape_string($UserName) . ",%'");
+        $GroupList = dbGetList('TestGroup', '', "GroupManagers LIKE '%," . my_escape_string($UserName) . ",%'");
         if(count($GroupList) > 0)
         {
             return true;
@@ -355,7 +355,7 @@ function baseGetUserACL($TestUserName)
     }
     else
     {
-        $GroupACL = testGetGroupList("GroupUser LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($TestUserName)) . ",%'");
+        $GroupACL = testGetGroupList("GroupUser LIKE '%," . my_escape_string(my_escape_string($TestUserName)) . ",%'");
         $GroupIDList = array('1' => '1');
         foreach($GroupACL as $GroupInfo)
         {
@@ -549,7 +549,7 @@ function baseGetFieldQueryStr($FieldName, $OperatorName, $FieldValue)
     {
         if('ModifiedBy' == $FieldName)
         {
-            $QueryStr = "NOT LIKE '%," . mysql_real_escape_string($FieldValue) . ",%' ";
+            $QueryStr = "NOT LIKE '%," . my_escape_string($FieldValue) . ",%' ";
         }
         else
         {
@@ -569,7 +569,7 @@ function baseGetFieldQueryStr($FieldName, $OperatorName, $FieldValue)
         }
         elseif('ModifiedBy' == $FieldName || 'MailTo' == $FieldName)
         {
-            $QueryStr = "LIKE '%," . mysql_real_escape_string($FieldValue) . ",%' ";
+            $QueryStr = "LIKE '%," . my_escape_string($FieldValue) . ",%' ";
         }
         else
         {
@@ -1346,7 +1346,7 @@ function testOpenBug($PostBugInfo)
     $OpenedBy = $PostBugInfo['TestUserName'];
     $LastEditedBy = $OpenedBy;
     $MailToList = testGetMailToList(sysStripSlash($PostBugInfo['MailTo']), $ProjectID, true);
-    $MailTo = mysql_real_escape_string($MailToList['MailToStr']);
+    $MailTo = my_escape_string($MailToList['MailToStr']);
     $BugKeyWord = htmlspecialchars(trim($PostBugInfo['BugKeyword']));
     $PostBugInfo['DuplicateID'] = dbGetValidValueList($PostBugInfo['DuplicateID'], 'BugInfo','BugID');
     $PostBugInfo['LinkID'] = dbGetValidValueList($PostBugInfo['LinkID'], 'BugInfo','BugID');
@@ -1472,7 +1472,7 @@ function testEditBug($PostBugInfo, $UploadFile = false)
 				
                 case 'MailTo':
                 $MailToList = testGetMailToList(sysStripSlash($PostBugInfo['MailTo']), $ProjectID);
-                $PostBugInfo['MailTo'] = mysql_real_escape_string($MailToList['MailToStr']);
+                $PostBugInfo['MailTo'] = my_escape_string($MailToList['MailToStr']);
                 break;
 
                 case 'BugKeyword':
@@ -1563,11 +1563,11 @@ function testEditBug($PostBugInfo, $UploadFile = false)
         $PostBugInfo['AssignedDate'] = $RawBugInfo['AssignedDate'];
     }
 
-    $ResolvedBy = mysql_real_escape_string($RawBugInfo['ResolvedBy']);
+    $ResolvedBy = my_escape_string($RawBugInfo['ResolvedBy']);
     $ResolvedBuild = $PostBugInfo['ResolvedBuild'];
     $Resolution = $PostBugInfo['Resolution'];
     $ResolvedDate = $RawBugInfo['ResolvedDate'];
-    $ClosedBy = mysql_real_escape_string($RawBugInfo['ClosedBy']);
+    $ClosedBy = my_escape_string($RawBugInfo['ClosedBy']);
     $ClosedDate = $RawBugInfo['ClosedDate'];
     $BugStatus = $RawBugInfo['BugStatus'];
     $ActionType = 'Edited';
@@ -1722,12 +1722,12 @@ function testEditBug($PostBugInfo, $UploadFile = false)
     }
     if($RawBugInfo['OpenedBy'] != sysStripSlash($PostBugInfo['TestUserName']) &&  $RawBugInfo['OpenedBy'] != sysStripSlash($PostBugInfo['AssignedTo']))
     {
-        $OpenedByUserInfo = testGetUserInfoByName(mysql_real_escape_string($RawBugInfo['OpenedBy']));
+        $OpenedByUserInfo = testGetUserInfoByName(my_escape_string($RawBugInfo['OpenedBy']));
         $MailToList['Email'][] = $OpenedByUserInfo['Email'];
     }
     if($PostBugInfo['ActionType'] == 'Closed' && $RawBugInfo['ResolvedBy'] != sysStripSlash($PostBugInfo['TestUserName']))
     {
-        $ResolvedByUserInfo = testGetUserInfoByName(mysql_real_escape_string($RawBugInfo['ResolvedBy']));
+        $ResolvedByUserInfo = testGetUserInfoByName(my_escape_string($RawBugInfo['ResolvedBy']));
         $MailToList['Email'][] = $ResolvedByUserInfo['Email'];
     }
     $ActionUser = $PostBugInfo['TestRealName'];
@@ -1804,7 +1804,7 @@ function testEditUser($PostUserInfo)
         dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$PostUserInfo[RealName]}'"
                                                    , 'Email', "'{$PostUserInfo[Email]}'"
                                                    , 'NoticeFlag', "'{$PostUserInfo[NoticeFlag]}'"
-                                                   , 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'"
+                                                   , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'"
                                                    , 'LastDate', 'now()'
                                                    , "UserName = '{$PostUserInfo[UserName]}'");
     }
@@ -1815,7 +1815,7 @@ function testEditUser($PostUserInfo)
                                                    , 'UserPassword', "'{$PostUserInfo[UserPassword]}'"
                                                    , 'Email', "'{$PostUserInfo[Email]}'"
                                                    , 'NoticeFlag', "'{$PostUserInfo[NoticeFlag]}'"
-                                                   , 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'"
+                                                   , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'"
                                                    , 'LastDate', 'now()'
                                                    , "UserName = '{$PostUserInfo[UserName]}'");
     }
@@ -1847,7 +1847,7 @@ function testOpenResult($PostResultInfo)
     $OpenedBy = $PostResultInfo['TestUserName'];
     $LastEditedBy = $OpenedBy;
     $MailToList = testGetMailToList(sysStripSlash($PostResultInfo['MailTo']), $ProjectID);
-    $PostResultInfo['MailTo'] = mysql_real_escape_string($MailToList['MailToStr']);
+    $PostResultInfo['MailTo'] = my_escape_string($MailToList['MailToStr']);
     $PostResultInfo['ResultKeyword'] = htmlspecialchars(trim($PostResultInfo['ResultKeyword']));
     $PostResultInfo['ResultBuild'] = htmlspecialchars(trim($PostResultInfo['ResultBuild']));
     $PostResultInfo['ResultMachine'] = htmlspecialchars(trim($PostResultInfo['ResultMachine']));
@@ -1955,7 +1955,7 @@ function testEditResult($PostResultInfo,$UploadFile = false)
     $ProjectID = $PostResultInfo['ProjectID'];
     $LastEditedBy = $PostResultInfo['TestUserName'];
     $MailToList = testGetMailToList(sysStripSlash($PostResultInfo['MailTo']), $ProjectID);
-    $PostResultInfo['MailTo'] = mysql_real_escape_string($MailToList['MailToStr']);
+    $PostResultInfo['MailTo'] = my_escape_string($MailToList['MailToStr']);
     $PostResultInfo['ResultBuild'] = htmlspecialchars(trim($PostResultInfo['ResultBuild']));
     $PostResultInfo['ResultMachine'] = htmlspecialchars(trim($PostResultInfo['ResultMachine']));
     $PostResultInfo['ResultSteps'] = htmlspecialchars($PostResultInfo['ResultSteps']);
@@ -2169,7 +2169,7 @@ function testOpenCase($PostCaseInfo)
     $OpenedBy = $PostCaseInfo['TestUserName'];
     $LastEditedBy = $OpenedBy;
     $MailToList = testGetMailToList(sysStripSlash($PostCaseInfo['MailTo']), $ProjectID);
-    $MailTo = mysql_real_escape_string($MailToList['MailToStr']);
+    $MailTo = my_escape_string($MailToList['MailToStr']);
     $PostCaseInfo['CaseKeyword'] = htmlspecialchars(trim($PostCaseInfo['CaseKeyword']));
     $PostCaseInfo['LinkID'] = dbGetValidValueList($PostCaseInfo['LinkID'], 'CaseInfo','CaseID');
     $PostCaseInfo['BugID' ] = dbGetValidValueList($PostCaseInfo['BugID'], 'BugInfo','BugID');
@@ -2310,7 +2310,7 @@ function testEditCase($PostCaseInfo, $UploadFile = false)
 
     $LastEditedBy = $PostCaseInfo['TestUserName'];
     $MailToList = testGetMailToList(sysStripSlash($PostCaseInfo['MailTo']), $ProjectID);
-    $PostCaseInfo['MailTo'] = mysql_real_escape_string($MailToList['MailToStr']);
+    $PostCaseInfo['MailTo'] = my_escape_string($MailToList['MailToStr']);
     $PostCaseInfo['CaseKeyword'] = htmlspecialchars(trim($PostCaseInfo['CaseKeyword']));
     $PostCaseInfo['LinkID'] = dbGetValidValueList($PostCaseInfo['LinkID'], 'CaseInfo','CaseID');
     $PostCaseInfo['BugID' ] = dbGetValidValueList($PostCaseInfo['BugID'], 'BugInfo','BugID');
@@ -2882,7 +2882,7 @@ function testAddAction($ActionTarget,$IdValue,$ActionUser,$ActionType,$ActionDat
  */
 function testAddHistory($ActionID, $ActionField, $OldValue, $NewValue)
 {
-    $HistoryID = dbInsertRow('TestHistory', "'{$ActionID}','{$ActionField}','" . mysql_real_escape_string($OldValue) . "','" . mysql_real_escape_string($NewValue) . "'",
+    $HistoryID = dbInsertRow('TestHistory', "'{$ActionID}','{$ActionField}','" . my_escape_string($OldValue) . "','" . my_escape_string($NewValue) . "'",
                                             'ActionID,ActionField,OldValue,NewValue');
     return $HistoryID;
 }
@@ -3033,7 +3033,7 @@ function testGetMailToList($MailToStr, $ProjectID = 0, $JudgeNotice = false)
             }
             else
             {
-                $UserInfo = testGetUserInfoByName(mysql_real_escape_string($Value));
+                $UserInfo = testGetUserInfoByName(my_escape_string($Value));
                 if(!empty($UserInfo) && ($ProjectID == 0 || ($ProjectID > 0  && $ProjectUserList[$UserInfo['UserName']] != '' )))
                 {
                 	if($JudgeNotice && (($UserInfo['NoticeFlag'] & 2) != 2))
@@ -3219,7 +3219,7 @@ function xCheckUserLogin($UserLoginForm)
             xAssignActionMessage($objResponse, $_LANG['Message']['SucceedLogin'], "GoodNews");
 
             // add user login log
-            dbInsertRow('TestUserLog', "'" . mysql_real_escape_string($TestUserInfo['UserName']) . "','{$_SERVER[REMOTE_ADDR]}',now()", 'UserName,LoginIP,LoginTime');
+            dbInsertRow('TestUserLog', "'" . my_escape_string($TestUserInfo['UserName']) . "','{$_SERVER[REMOTE_ADDR]}',now()", 'UserName,LoginIP,LoginTime');
 
             if($_SESSION['LoginJumpURI'] == '')
             {
@@ -3286,7 +3286,7 @@ function xAdminAddProject($ProjectForm)
     /* add project */
     else
     {
-        $ProjectManagers = mysql_real_escape_string($ProjectForm['ProjectManagers']);
+        $ProjectManagers = my_escape_string($ProjectForm['ProjectManagers']);
         $ProjectGroupIDs = $ProjectForm['ProjectGroupIDs'];
         if($ProjectManagers != '') $ProjectManagers = ',' . $ProjectManagers . ',';
         if($ProjectGroupIDs != '') $ProjectGroupIDs = ',' . $ProjectGroupIDs . ',';
@@ -3295,7 +3295,7 @@ function xAdminAddProject($ProjectForm)
         $ProjectID = dbInsertRow('TestProject', "'{$ProjectForm[ProjectName]}','{$ProjectForm['DisplayOrder']}',',{$ProjectForm['NotifyEmail']},',
                                                  '{$ProjectManagers}','{$ProjectGroupIDs}', 
                                                  '{$ProjectForm[ProjectDoc]}','{$ProjectForm[ProjectPlan]}', 
-                                                 '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now(), '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now()"
+                                                 '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now()"
                                               , "ProjectName, DisplayOrder,NotifyEmail ,ProjectManagers, ProjectGroupIDs, ProjectDoc, ProjectPlan, AddedBy, AddDate, LastEditedBy, LastDate");
         $_SESSION['TestUserACL'][$ProjectID] = 'All';
         $_SESSION['TestUserACLSQL'] = 'ProjectID' . dbCreateIN(join(',', array_keys($_SESSION['TestUserACL'])));
@@ -3336,7 +3336,7 @@ function xAdminEditProject($ProjectForm)
     /* edit project */
     else
     {
-        $ProjectManagers = mysql_real_escape_string($ProjectForm['ProjectManagers']);
+        $ProjectManagers = my_escape_string($ProjectForm['ProjectManagers']);
         $ProjectGroupIDs = $ProjectForm['ProjectGroupIDs'];
         if($ProjectManagers != '') $ProjectManagers = ',' . $ProjectManagers . ',';
         if($ProjectGroupIDs != '') $ProjectGroupIDs = ',' . $ProjectGroupIDs . ',';
@@ -3349,7 +3349,7 @@ function xAdminEditProject($ProjectForm)
                                  , 'ProjectGroupIDs', "'{$ProjectGroupIDs}'"
                                  , 'ProjectDoc', "'{$ProjectForm[ProjectDoc]}'"
                                  , 'ProjectPlan', "'{$ProjectForm[ProjectPlan]}'"
-                                 , 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'"
+                                 , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'"
                                  , 'LastDate', 'now()'
                                  , "ProjectID = '{$ProjectForm[ProjectID]}'");
 
@@ -3411,7 +3411,7 @@ function xAdminAddModule($AMForm)
         
         $ModuleID = dbInsertRow('TestModule', "'{$AMForm[ModuleType]}','{$AMForm[ProjectID]}','{$AMForm[ModuleName]}','{$ModuleGrade}','{$AMForm[ParentModuleID]}','{$AMForm[AddModuleOwner]}', '{$AMForm[DisplayOrder]}', now(),now()"
                                               , "ModuleType,ProjectID, ModuleName, ModuleGrade, ParentID, ModuleOwner, DisplayOrder, AddDate, LastDate");
-        dbUpdateRow('TestProject', 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()', "ProjectID = '{$AMForm[ProjectID]}'");
+        dbUpdateRow('TestProject', 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()', "ProjectID = '{$AMForm[ProjectID]}'");
         $SuccessInfo = $_LANG['SucceedAddModule'];
         $objResponse->addScript("setTimeout('window.location.reload()',2000);");
         xAssignActionMessage($objResponse, $SuccessInfo, 'GoodNews');
@@ -3594,7 +3594,7 @@ function xAdminEditModule($EMForm)
                 }
             }
         }
-        dbUpdateRow('TestProject', 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()', "ProjectID = '{$EMForm[ProjectID]}'");
+        dbUpdateRow('TestProject', 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()', "ProjectID = '{$EMForm[ProjectID]}'");
     }
     return $objResponse;
 }
@@ -3611,7 +3611,7 @@ function xAdminAddUser($UserForm)
 {
     global $_LANG, $_CFG;
     
-    $UserForm['UserName'] = mysql_real_escape_string(strtolower(htmlspecialchars(trim($UserForm['UserName']))));
+    $UserForm['UserName'] = my_escape_string(strtolower(htmlspecialchars(trim($UserForm['UserName']))));
     $UserForm['RealName'] = htmlspecialchars(trim($UserForm['RealName']));
     $UserForm['Email'] = trim($UserForm['Email']);
     $objResponse = new xajaxResponse();
@@ -3708,7 +3708,7 @@ function xAdminAddUser($UserForm)
     }
     else
     {
-        $UserID = dbInsertRow($_CFG['UserTable']['TableName'], "'{$UserForm[UserName]}','{$UserForm[RealName]}','{$UserForm[UserPassword]}', '{$UserForm[Email]}', '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now(), '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now(), '0', '{$UserForm[AuthMode]}'"
+        $UserID = dbInsertRow($_CFG['UserTable']['TableName'], "'{$UserForm[UserName]}','{$UserForm[RealName]}','{$UserForm[UserPassword]}', '{$UserForm[Email]}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '0', '{$UserForm[AuthMode]}'"
             , "UserName, RealName, UserPassword, Email, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode");
 
         if($UserForm['AuthMode'] == 'LDAP')
@@ -3789,7 +3789,7 @@ function xAdminEditUser($UserForm)
            dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$UserForm[RealName]}'"
                                                        , 'UserPassword', "'{$UserForm[UserPassword]}'"
                                                        , 'Email', "'{$UserForm[Email]}'"
-                                                       , 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) ."'"
+                                                       , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) ."'"
                                                        , 'LastDate', 'now()'
                                                        , "UserID = '{$UserForm[UserID]}'");
             $objResponse->addAppend('UserForm', 'style.display', 'none');
@@ -3827,7 +3827,7 @@ function xAdminAddGroup($GroupForm)
     /* add group */
     else
     {
-        $GroupUser = mysql_real_escape_string($GroupForm['GroupUserNames']);
+        $GroupUser = my_escape_string($GroupForm['GroupUserNames']);
         $GroupACL = NULL;
         if($GroupUser != '')
         {
@@ -3836,10 +3836,10 @@ function xAdminAddGroup($GroupForm)
             $GroupUser = join(',',array_keys($GroupUserList));
 
             /* Add "," at both end of the variable finally like this: ,wwccss,admin, */
-            $GroupUser = mysql_real_escape_string(',' . $GroupUser . ',');
+            $GroupUser = my_escape_string(',' . $GroupUser . ',');
         }
 
-        $GroupManager = mysql_real_escape_string($GroupForm['GroupManagerNames']);
+        $GroupManager = my_escape_string($GroupForm['GroupManagerNames']);
         if($GroupManager != '')
         {
             $GroupManagerList = testGetUserList($_CFG['UserTable']['UserName'] . dbCreateIN($GroupManager));
@@ -3847,10 +3847,10 @@ function xAdminAddGroup($GroupForm)
             $GroupManager = join(',',array_keys($GroupManagerList));
 
             /* Add "," at both end of the variable finally like this: ,wwccss,admin, */
-            $GroupManager = mysql_real_escape_string(',' . $GroupManager . ',');
+            $GroupManager = my_escape_string(',' . $GroupManager . ',');
         }
 
-        $GroupID = dbInsertRow('TestGroup', "'{$GroupForm[GroupName]}','{$GroupManager}','{$GroupUser}', '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now(), '" . mysql_real_escape_string($_SESSION['TestUserName']) . "', now()"
+        $GroupID = dbInsertRow('TestGroup', "'{$GroupForm[GroupName]}','{$GroupManager}','{$GroupUser}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now()"
                                               , "GroupName, GroupManagers, GroupUser, AddedBy, AddDate, LastEditedBy, LastDate");
         $SuccessInfo = $GroupForm['GroupName'] . $_LANG['SucceedAddGroup'] . htmlLink($_LANG['EditGroup'], 'AdminGroup.php?ActionType=EditGroup&GroupID=' . $GroupID) . "|" . htmlLink($_LANG['GoOnAddGroup'], 'AdminGroup.php?ActionType=AddGroup') . '|' . htmlLink($_LANG['BackToGroupList'], 'AdminGroupList.php');
         $objResponse->addAppend('GroupForm', 'style.display', 'none');
@@ -3887,29 +3887,29 @@ function xAdminEditGroup($GroupForm)
     /* edit group */
     else
     {
-        $GroupUser = mysql_real_escape_string($GroupForm['GroupUserNames']);
+        $GroupUser = my_escape_string($GroupForm['GroupUserNames']);
         $GroupACL = NULL;
         if($GroupUser != '')
         {
             $GroupUserList = testGetUserList($_CFG['UserTable']['UserName'] .  dbCreateIN($GroupUser));
             uasort($GroupUserList, 'testCmpPreAppendName');
-            $GroupUser = mysql_real_escape_string(join(',',array_keys($GroupUserList)));
+            $GroupUser = my_escape_string(join(',',array_keys($GroupUserList)));
 
             /* Edit "," at both end of the variable finally like this: ,wwccss,admin, */
             $GroupUser = ',' . $GroupUser . ',';
         }
-        $GroupManager = mysql_real_escape_string($GroupForm['GroupManagerNames']);
+        $GroupManager = my_escape_string($GroupForm['GroupManagerNames']);
         if($GroupManager != '')
         {
             $GroupManagerList = testGetUserList($_CFG['UserTable']['UserName'] . dbCreateIN($GroupManager));
             uasort($GroupManagerList, 'testCmpPreAppendName');
-            $GroupManager = mysql_real_escape_string(join(',',array_keys($GroupManagerList)));
+            $GroupManager = my_escape_string(join(',',array_keys($GroupManagerList)));
 
             /* Add "," at both end of the variable finally like this: ,wwccss,admin, */
             $GroupManager = ',' . $GroupManager . ',';
         }
         dbUpdateRow('TestGroup', 'GroupName', "'{$GroupForm[GroupName]}'", 'GroupManagers', "'{$GroupManager}'", 'GroupUser', "'{$GroupUser}'"
-                                   , 'LastEditedBy', "'" . mysql_real_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()'
+                                   , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()'
                                    , "GroupID ='{$GroupForm[GroupID]}'");
         $SuccessInfo = $GroupForm['GroupName'] . $_LANG['SucceedEditGroup'];
         $objResponse->addAppend('GroupForm', 'style.display', 'none');

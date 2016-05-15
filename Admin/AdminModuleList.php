@@ -17,7 +17,7 @@ sysXajaxRegister("xProjectSetSlaveModule,xSetModuleOwner,xProjectSetAssignedUser
 $ProjectID = $_GET['ProjectID'];
 if($_SESSION['TestIsProjectAdmin'])
 {
-    $ProjectInfo = current(testGetProjectList("ProjectID = '{$_GET[ProjectID]}' AND ProjectManagers LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($_SESSION['TestUserName'])) . ",%'"));
+    $ProjectInfo = current(testGetProjectList("ProjectID = '{$_GET[ProjectID]}' AND ProjectManagers LIKE '%," . my_escape_string(my_escape_string($_SESSION['TestUserName'])) . ",%'"));
 }
 elseif($_SESSION['TestIsAdmin'])
 {

@@ -10,7 +10,7 @@
 /* Init BugFree system. */
 require_once("Include/Init.inc.php");
 
-$UserInfo = dbGetRow('TestUser', '', "UserName = '" . mysql_real_escape_string($_SESSION['TestUserName']) . "'");
+$UserInfo = dbGetRow('TestUser', '', "UserName = '" . my_escape_string($_SESSION['TestUserName']) . "'");
 $isReceiveEmail = ($UserInfo['NoticeFlag'] & 2) == 2 ? true : false;
 $isReceiveWangwang = ($UserInfo['NoticeFlag'] & 1) == 1 ? true : false;
 

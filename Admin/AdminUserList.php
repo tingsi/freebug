@@ -31,7 +31,7 @@ if(isset($_GET['SearchUser']))
 
 if($SSearchUser != '')
 {
-    $SSearchUser = mysql_real_escape_string(mysql_real_escape_string($SSearchUser));
+    $SSearchUser = my_escape_string(my_escape_string($SSearchUser));
     $Where .= " AND ( BINARY {$_CFG[UserTable][UserName]} like '%{$SSearchUser}%' ";
     $Where .= " OR BINARY {$_CFG[UserTable][RealName]} like '%{$SSearchUser}%' ";
     $Where .= " OR BINARY {$_CFG[UserTable][Email]} like '%{$SSearchUser}%' )";
@@ -41,7 +41,7 @@ else
     if($_SESSION['SearchUser'] != '')
     {
        $SSearchUser =  $_SESSION['SearchUser'];
-       $SSearchUser = mysql_real_escape_string(mysql_real_escape_string($SSearchUser));
+       $SSearchUser = my_escape_string(my_escape_string($SSearchUser));
        $Where .= " AND ( BINARY {$_CFG[UserTable][UserName]} like '%{$SSearchUser}%' ";
        $Where .= " OR BINARY {$_CFG[UserTable][RealName]} like '%{$SSearchUser}%' ";
        $Where .= " OR BINARY {$_CFG[UserTable][Email]} like '%{$SSearchUser}%' )";
@@ -71,7 +71,7 @@ $UserNameList = testGetOneDimUserList();
 
 foreach($UserList as $UserName => $UserInfo)
 {
-    $SUserName = mysql_real_escape_string(mysql_real_escape_string($UserInfo['UserName']));
+    $SUserName = my_escape_string(my_escape_string($UserInfo['UserName']));
     $GroupACL = dbGetList('TestGroup', '', "GroupUser LIKE '%," . $SUserName . ",%'");
     $UserGroupList = array();
     foreach($GroupACL as $Key => $GroupInfo)

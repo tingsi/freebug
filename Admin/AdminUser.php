@@ -21,7 +21,7 @@ if($ActionType != 'EditUser')
 else
 {
     $UserInfo = dbGetRow('TestUser', '', "UserID = '{$_GET[UserID]}'");
-    $GroupACL = dbGetList('TestGroup', '', "GroupUser LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($UserInfo['UserName'])) . ",%'");
+    $GroupACL = dbGetList('TestGroup', '', "GroupUser LIKE '%," . my_escape_string(my_escape_string($UserInfo['UserName'])) . ",%'");
     $UserGroupList = array();
     foreach($GroupACL as $Key => $GroupInfo)
     {
@@ -37,23 +37,23 @@ else
             {
                 $NewGroupUsers = str_replace(',' . $UserInfo['UserName'], '' , $GroupInfo['GroupUser']);
                 if($NewGroupUsers == ',') $NewGroupUsers = '';
-                $NewGroupUsers = mysql_real_escape_string($NewGroupUsers);
+                $NewGroupUsers = my_escape_string($NewGroupUsers);
                 dbUpdateRow('TestGroup', 'GroupUser', "'{$NewGroupUsers}'",  "GroupID = '{$GroupInfo[GroupID]}'");                   
 
                 $NewGroupManagers = str_replace(',' . $UserInfo['UserName'], '' , $GroupInfo['GroupManagers']);
                 if($NewGroupManagers == ',') $NewGroupManagers = '';
-                $NewGroupManagers = mysql_real_escape_string($NewGroupManagers);
+                $NewGroupManagers = my_escape_string($NewGroupManagers);
                 dbUpdateRow('TestGroup', 'GroupManagers', "'{$NewGroupManagers}'",  "GroupID = '{$GroupInfo[GroupID]}'");                   
 
             } 
 
             /* update project info*/
-            $ProjectAdminACL = dbGetList('TestProject', '', "ProjectManagers LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($UserInfo['UserName'])) . ",%'");
+            $ProjectAdminACL = dbGetList('TestProject', '', "ProjectManagers LIKE '%," . my_escape_string(my_escape_string($UserInfo['UserName'])) . ",%'");
             foreach($ProjectAdminACL as $ProjectInfo)
             {
                 $NewProjectManagers = str_replace(',' . $UserInfo['UserName'], '' , $ProjectInfo['ProjectManagers']);
                 if($NewProjectManagers == ',') $NewProjectManagers = '';
-                $NewProjectManagers = mysql_real_escape_string($NewProjectManagers);
+                $NewProjectManagers = my_escape_string($NewProjectManagers);
                 dbUpdateRow('TestProject', 'ProjectManagers', "'{$NewProjectManagers}'",  "ProjectID = '{$ProjectInfo[ProjectID]}'");                   
             } 
             

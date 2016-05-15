@@ -24,7 +24,7 @@ if($_SESSION['TestIsAdmin'])
 }
 elseif($_SESSION['TestIsProjectAdmin'])
 {
-    $Where = " ProjectManagers LIKE '%," . mysql_real_escape_string(mysql_real_escape_string($_SESSION['TestUserName'])) . ",%'";
+    $Where = " ProjectManagers LIKE '%," . my_escape_string(my_escape_string($_SESSION['TestUserName'])) . ",%'";
 }
 
 if(isset($_GET['SearchProject']))

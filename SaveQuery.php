@@ -44,7 +44,7 @@ if(isset($_POST['QueryTitle']))
         exit;
     }
 
-    $UserName = mysql_real_escape_string($_SESSION['TestUserName']);
+    $UserName = my_escape_string($_SESSION['TestUserName']);
     $QueryTitle = trim($_POST['QueryTitle']);
 
           // check the querytitle
@@ -61,7 +61,7 @@ if(isset($_POST['QueryTitle']))
         $QueryStr = addslashes($_SESSION[$QueryType . 'QueryCondition']);
         $AndOrListCondition = serialize($_SESSION[$QueryType . 'AndOrListCondition']);
         $OperatorListCondition = serialize($_SESSION[$QueryType . 'OperatorListCondition']);
-        $ValueListCondition = mysql_real_escape_string(serialize($_SESSION[$QueryType . 'ValueListCondition']));
+        $ValueListCondition = my_escape_string(serialize($_SESSION[$QueryType . 'ValueListCondition']));
         $FieldListCondition = serialize($_SESSION[$QueryType . 'FieldListCondition']);
         $FieldsToShow = implode(",",array_keys(testSetCustomFields($QueryType)));
         

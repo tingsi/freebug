@@ -17,7 +17,7 @@ function xUpdateUserControl($TestMode)
     $_SESSION['UpdateUserControl'] = 'UpdateUserControl';
     $LimitNum = '10';
 
-    $UCTestUserName = mysql_real_escape_string($_SESSION['TestUserName']);
+    $UCTestUserName = my_escape_string($_SESSION['TestUserName']);
 
     $objResponse = new xajaxResponse();
     sleep(1); //we'll do nothing for two seconds
@@ -125,7 +125,7 @@ sysXajaxRegister("xUpdateUserControl");
 $LimitNum = '10';
 
 $TestMode = $_SESSION['TestMode'];
-$UCTestUserName = mysql_real_escape_string($_SESSION['TestUserName']);
+$UCTestUserName = my_escape_string($_SESSION['TestUserName']);
 
 if($_GET['DelQueryID'] != '')
 {
@@ -187,4 +187,3 @@ $TPL->assign('QueryList', $QueryList);
 $TPL->assign('TestMode', $_SESSION['TestMode']);
 
 $TPL->display('UserControl.tpl');
-?>

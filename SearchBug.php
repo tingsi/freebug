@@ -88,7 +88,7 @@ if($_REQUEST['UpdateQueryID'])
    $QueryStr = addslashes($_SESSION['BugQueryCondition']);
    $AndOrListCondition = serialize($_SESSION['BugAndOrListCondition']);
    $OperatorListCondition = serialize($_SESSION['BugOperatorListCondition']);
-   $ValueListCondition = mysql_real_escape_string(serialize($_SESSION['BugValueListCondition']));
+   $ValueListCondition = my_escape_string(serialize($_SESSION['BugValueListCondition']));
    $FieldListCondition = serialize($_SESSION['BugFieldListCondition']);
    $FieldsToShow = implode(",",array_keys(testSetCustomFields('Bug')));
    
@@ -173,4 +173,3 @@ $TPL->assign("AndOrList", $AndOrList);
 $TPL->assign("FieldCount",$FieldCount);
 
 $TPL->display('Search.tpl');
-?>

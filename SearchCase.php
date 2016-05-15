@@ -86,7 +86,7 @@ if($_REQUEST['UpdateQueryID'])
    $QueryStr = addslashes($_SESSION['CaseQueryCondition']);
    $AndOrListCondition = serialize($_SESSION['CaseAndOrListCondition']);
    $OperatorListCondition = serialize($_SESSION['CaseOperatorListCondition']);
-   $ValueListCondition = mysql_real_escape_string(serialize($_SESSION['CaseValueListCondition']));
+   $ValueListCondition = my_escape_string(serialize($_SESSION['CaseValueListCondition']));
    $FieldListCondition = serialize($_SESSION['CaseFieldListCondition']);
    $FieldsToShow = implode(",",array_keys(testSetCustomFields('Case')));
 

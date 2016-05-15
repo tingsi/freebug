@@ -30,7 +30,7 @@ else
 {
     /* Get group info */
     $GroupInfo = array_pop(testGetGroupList("GroupID='{$_GET[GroupID]}'"));
-    if(!$_SESSION['TestIsAdmin'] && !preg_match('/,'. mysql_real_escape_string($_SESSION['TestUserName']) . ',/', $GroupInfo['GroupManagers']) && $_SESSION['TestUserName'] != $GroupInfo['AddedBy'])
+    if(!$_SESSION['TestIsAdmin'] && !preg_match('/,'. my_escape_string($_SESSION['TestUserName']) . ',/', $GroupInfo['GroupManagers']) && $_SESSION['TestUserName'] != $GroupInfo['AddedBy'])
     {
         sysErrorMsg();
     }

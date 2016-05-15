@@ -9,45 +9,49 @@
  */
 
 //------------------------- SYSTEM FUNCTIONS -----------------------------------//
+
+function my_escape_string($string)
+{
+    global $MyDB;
+    return $MyDB->real_escape_string($string);
+}
+
 /**
  * Close database connection
- *
- * @author                  Yupeng Lee <leeyupeng@gmail.com>
  */
 function sysCloseDB()
 {
     global $MyDB, $MyUserDB, $_CFG;
-    $MyDB->Close();
+    $MyDB && $MyDB->close();
     if(!empty($_CFG['UserDB']))
     {
-        $MyUserDB->Close();
+        $MyUserDB->close();
     }
 }
 
 /**
- * Check database exists
+ * make database exists
  *
- * @author                  Yupeng Lee <leeyupeng@gmail.com>
- * @param   string   $DatabaseName
- * @return  bool
  */
-function sysCheckDBExists($DatabaseName)
+function sysMakeDBExists($DatabaseName)
 {
     global $_CFG;
     $DBExists = false;
 
-    $link = @mysql_connect($_CFG['DB']['Host'], $_CFG['DB']['User'], $_CFG['DB']['Password']);
-    $db_list = @mysql_list_dbs($link);
-
-    while ($row = @mysql_fetch_object($db_list)) {
-        if($DatabaseName == $row->Database)
-        {
-            $DBExists = false;
-            break;
-        }
+    $mysqli= new mysqli($_CFG['DB']['Host'], $_CFG['DB']['User'], $_CFG['DB']['Password']);
+    if ($mysqli->errno) {
+	printf("Connect failed: %s\n", $mysqli->error);
+	exit();
     }
 
-    return $DBExists;
+    $res = $mysqli->query("select database()");
+    if ($res) {
+        $row = $res->fetch_row();
+	$DBExists = in_array($DatabaseName, $row);
+	$res->close();
+    }
+    if (!DBExists) $mysqli->query("create database {$DatabaseName}");  
+    $mysqli->close();
 }
 
 /**
@@ -628,7 +632,7 @@ function dbGetFieldInfo($TableName, $FieldName)
     }
     else
     {
-        die($MyDB->errorMsg());
+        die($MyDB->error);
     }
 }
 
@@ -737,20 +741,16 @@ function dbGetList($TableNames, $Columns = "", $Where = "", $GroupBy = "", $Orde
     $DataList = array();
     $Sql =  dbGetListSql($TableNames, $Columns, $Where, $GroupBy, $OrderBy, $Limit);
     
-    if($ListKey == '')
     {
-        $DataList = $DB->GetAll($Sql);
-    }
-    else
-    {
-        $rs = $DB->Execute($Sql);
+        $rs = $DB->query($Sql);
         if($rs)
         {
-            while(!$rs->EOF)
+            while($Row = $rs->fetch_array())
             {
-                $Row = $rs->fields;
-                $DataList[$Row[$ListKey]] = $Row;
-                $rs->MoveNext();
+	        if($ListKey)
+		    $DataList[$Row[$ListKey]] = $Row;
+		else
+		    $DataList[] = $Row;
             }
         }
     }
@@ -797,7 +797,13 @@ function dbGetRow($TableName, $Columns = "", $Where = "", $DB = "")
     $TableName = dbGetPrefixTableNames($TableName);
 
     $Sql = dbGetListSql($TableName, $Columns, $Where);
-    $Data = $DB->GetRow($Sql);
+    $rs = $DB->query($Sql);
+    $Data = array();
+    if($rs) { 
+        $Data = $rs->fetch_array();
+        $rs->close();
+    }
+
     return $Data;
 }
 
@@ -848,9 +854,9 @@ function dbInsertRow($TableName, $Values, $Columns = '')
 
     $Sql .= ' VALUES (' . $Values . ')';
 
-    $DB->Execute($Sql);
+    $DB->query($Sql);
 
-    return $MyDB->Insert_ID();
+    return $MyDB->insert_id;
 }
 
 /**
@@ -899,7 +905,7 @@ function dbUpdateRow()
         $Sql .= ' WHERE ' . $Where;
     }
 
-    $DB->Execute($Sql);
+    $DB->query($Sql);
 }
 
 /**
@@ -923,7 +929,7 @@ function dbDeleteRow($TableName, $Where = "")
         $Sql .= ' WHERE ' . $Where;
     }
 
-    $DB->Execute($Sql);
+    $DB->query($Sql);
 }
 
 /*============================================HTMl FUNCTIONS=====================================*/

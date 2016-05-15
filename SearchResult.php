@@ -88,7 +88,7 @@ if($_REQUEST['UpdateQueryID'])
    $QueryStr = addslashes($_SESSION['ResultQueryCondition']);
    $AndOrListCondition = serialize($_SESSION['ResultAndOrListCondition']);
    $OperatorListCondition = serialize($_SESSION['ResultOperatorListCondition']);
-   $ValueListCondition = mysql_real_escape_string(serialize($_SESSION['ResultValueListCondition']));
+   $ValueListCondition = my_escape_string(serialize($_SESSION['ResultValueListCondition']));
    $FieldListCondition = serialize($_SESSION['ResultFieldListCondition']);
    $FieldsToShow = implode(",",array_keys(testSetCustomFields('Result')));
 
