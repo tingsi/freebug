@@ -41,19 +41,19 @@ class XML{
     var $stack;    #a stack of the most recent parent at each nesting level    
     var $last_opened_tag; #keeps track of the last tag opened.    
   
-    function XML(){    
+    function __construct(){    
          $this->parser = &xml_parser_create();    
-        xml_parser_set_option(&$this->parser, XML_OPTION_CASE_FOLDING, false);    
-        xml_set_object(&$this->parser, &$this);    
-        xml_set_element_handler(&$this->parser, 'open','close');    
-        xml_set_character_data_handler(&$this->parser, 'data');    
+        xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);    
+        xml_set_object($this->parser, $this);    
+        xml_set_element_handler($this->parser, 'open','close');    
+        xml_set_character_data_handler($this->parser, 'data');    
     }    
-    function destruct(){ xml_parser_free(&$this->parser); }    
+    function destruct(){ xml_parser_free($this->parser); }    
     function & parse(&$data){    
         $this->document = array();    
         $this->stack    = array();    
         $this->parent   = &$this->document;    
-        return xml_parse(&$this->parser, &$data, true) ? $this->document : NULL;    
+        return xml_parse($this->parser, $data, true) ? $this->document : NULL;    
     }    
     function open(&$parser, $tag, $attributes){    
         $this->data = ''; #stores temporary cdata    
@@ -68,7 +68,7 @@ class XML{
                     $arr = array('0 attr'=>&$this->parent["$tag attr"], &$this->parent[$tag]);   
                     unset($this->parent["$tag attr"]);   
                 }else{   
-                    $arr = array(&$this->parent[$tag]);   
+                    $arr = array($this->parent[$tag]);   
                 }   
                 $this->parent[$tag] = &$arr;   
                 $key = 1;   

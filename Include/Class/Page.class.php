@@ -112,8 +112,12 @@ class Page
     function getRecTotal()
     {
         $SQL      = "SELECT COUNT(*) AS RecTotal FROM $this->_TableName $this->_Where";
-        $Data = $this->_MyLink->GetRow($SQL);
-        $this->_RecTotal = $Data['RecTotal'];
+        $rs = $this->_MyLink->query($SQL);
+	if ($rs) {
+	    $Data = $rs->fetch_array();
+	    $this->_RecTotal = $Data['RecTotal'];
+	    $rs->close();
+	}
         return $this->_RecTotal;
     }
 
