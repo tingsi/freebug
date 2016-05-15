@@ -75,7 +75,7 @@ class Page
      * @param  string   $URL         链接条件。
      * @param  resource $MyLink      连接操作符。
      */
-    function page($TableName, $RecTotal = "", $RecPerPage = 20, $PageID = 0, $Where = "", $URL="", $MyLink = '')
+    function __construct($TableName, $RecTotal = "", $RecPerPage = 20, $PageID = 0, $Where = "", $URL="", $MyLink = '')
     {
         $TableName = dbGetPrefixTableNames($TableName);
 

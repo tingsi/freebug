@@ -91,7 +91,9 @@ if(!$DBResult)
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $MyDB->debug_console = true;
-if(version_compare(@mysql_get_server_info(), '4.1.0', '>=')){$_CFG['Mysql4.1.0Plus'] = true;}
+
+$_CFG['Mysql4.1.0Plus'] = true;
+
 if($_CFG['DBCharset'] != '' && $_CFG['Mysql4.1.0Plus'])
 {
     $MyDB->Query("SET NAMES {$_CFG['DBCharset']}");

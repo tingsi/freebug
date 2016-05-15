@@ -215,9 +215,6 @@ class ADOConnection
 	var $query_list_errors = array();
 	var $_logsql = false;
 
-	function ADOConnection()
-	{
-	}
 
 	/**
 	 * Returns floating point version number of ADOdb Lite
