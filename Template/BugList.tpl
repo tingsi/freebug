@@ -1,4 +1,3 @@
-{include file="XmlHeader.tpl"}
 {include file="Header.tpl"}
 {include file="ResizeList.tpl"}
 <script>if(parent.window==window)window.location='index.php';</script>
