@@ -51,7 +51,7 @@ $_CFG['UserTable']['NoticeFlag']    = 'NoticeFlag';
 $_CFG['UserTable']['EncryptType']   = 'md5';    // md5|text|mysqlpassword
 
 /* 6. Query Setting. */
-$_CFG['QueryFieldNumber'] = 6;      // The fields number to query in QueryBugForm.php
+$_CFG['QueryFieldNumber'] = 4;      // The fields number to query in QueryBugForm.php
 $_CFG['ShowQuery']        = false;  // Showing query condition or not(QueryBug.php).
 $_CFG['RecordPerPage']    = 20;     // Record count per page(QueryBug.php).
 
