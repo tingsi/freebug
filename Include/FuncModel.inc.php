@@ -1014,7 +1014,8 @@ function testGetModuleList($ProjectID, $ModuleType = 'Bug')
  */
 function testGetProjectModuleList($ProjectID, $ModuleType = 'Bug')
 {
-    $ProjectInfo = array_pop(testGetProjectList("ProjectID = '{$ProjectID}'"));
+    $ProjectList = testGetProjectList("ProjectID = '{$ProjectID}'");
+    $ProjectInfo = array_pop($ProjectList);
     if($ModuleType == 'Result')
     {
         $ModuleType = 'Case';
