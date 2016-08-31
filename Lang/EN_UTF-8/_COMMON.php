@@ -180,10 +180,10 @@ $_LANG["DefaultBugQueryFields"] = array
 $_LANG['BugSeveritys'] = array
 (
    '' => '',
-   1 => '1',
-   2 => '2',
-   3 => '3',
-   4 => '4',
+   1 => 'Fatal',
+   2 => 'Error',
+   3 => 'Normal',
+   4 => 'Suggest',
 );
 
 /* Bug Priority. */

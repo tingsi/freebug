@@ -180,20 +180,20 @@ $_LANG["DefaultBugQueryFields"] = array
 $_LANG['BugSeveritys'] = array
 (
    '' => '',
-   1 => '1',
-   2 => '2',
-   3 => '3',
-   4 => '4',
+   1 => '致命',
+   2 => '严重',
+   3 => '一般',
+   4 => '提示',
 );
 
 /* Bug Priority. */
 $_LANG['BugPriorities'] = array
 (
    '' => '',
-   1 => '1',
-   2 => '2',
-   3 => '3',
-   4 => '4',
+   1 => '一级',
+   2 => '二级',
+   3 => '三级',
+   4 => '四级',
 );
 
 /* Define the OS list. */
