@@ -44,7 +44,7 @@
                 {foreach from=$FieldsToShow key=Field item=FieldName}
                 <th align="{if $Field == 'BugID' || $Field == 'BugSeverity'}center{else}left{/if}">
                   <a href="?OrderBy={$Field}|{$OrderByTypeList[$Field]}&QueryMode={$QueryMode}">
-                  {if $Field == 'BugSeverity'}Sev{elseif $Field == 'BugPriority'}Pri{else}{$FieldName}{/if}
+                  {$FieldName}
                   </a>
                   {if $OrderByColumn == $Field}{$OrderTypeArrowArray[$OrderByType]}{/if}
                 </th>
