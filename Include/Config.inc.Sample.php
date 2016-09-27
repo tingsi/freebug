@@ -31,17 +31,15 @@ $_CFG['DB']['TablePrefix'] = 'bf_';
 $_CFG['DBCharset']         = 'UTF8';
 
 /*
- * 4. Define the username and password of the user validating database.
- * If the user validating database is different from the BugFree database, uncomment lines below.
+ * 4. LDAP 认证设置
  */
 /*
-$_CFG['UserDB']['User']     = 'root';
-$_CFG['UserDB']['Password'] = '';
-$_CFG['UserDB']['Host']     = 'localhost';
-$_CFG['UserDB']['Database'] = 'BugFree';
+$_CFG['LDAP']['Host']   = 'localhost';
+$_CFG['LDAP']['Port']   =   389;
+$_CFG['LDAP']['Base']   =   '';
 */
 
-/* 5. Define validating table and it's fields. If you don't use item 4, don't change them. */
+/* 5. Define validating table and it's fields. don't change them. */
 $_CFG['UserTable']['TableName']     = 'TestUser';
 $_CFG['UserTable']['UserName']      = 'UserName';
 $_CFG['UserTable']['RealName']      = 'RealName';

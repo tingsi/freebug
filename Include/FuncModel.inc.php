@@ -39,14 +39,14 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
     global $_CFG;
     $TestUserName = trim($TestUserName);
     $TestUserPWD = $TestUserPWD;
-    $DBName = !empty($_CFG['UserDB']) ? 'MyUserDB' : 'MyDB';
+    $DBName = 'MyDB';
 
     global $$DBName;
 
 
     $TestUserInfo = array();
 
-    if($DBName == 'MyDB')
+ 
     {
         $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "'" . " AND IsDroped = '0'";
         $DBTestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email, AuthMode",  $Where , $$DBName);
@@ -93,17 +93,8 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
             }
         }
     }
-    else
-    {
-        if($Encrypt)
-        {
-            $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
-        }
 
-        $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
-        $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email"
-                                                        ,  $Where , $$DBName);
-    }
+    
 
     return $TestUserInfo;
 }
@@ -198,7 +189,7 @@ function baseEncryptUserPWD($TestUserPWD, $TestUserName = '')
     }
     elseif($_CFG['UserTable']['EncryptType'] == 'discuzuc')
     {
-        $DBName = !empty($_CFG['UserDB']) ? 'MyUserDB' : 'MyDB';
+        $DBName = 'MyDB';
         global $$DBName;
         $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName,salt", "UserName = '{$TestUserName}'", $$DBName);
         $TestUserPWD= md5(md5($TestUserPWD).$TestUserInfo['salt']);
@@ -640,20 +631,20 @@ function testGetUserList($Where = '', $OrderBy = 'UserName ASC', $Limit = '', $L
 {
     global $_CFG;
 
-    $DBName = !empty($_CFG['UserDB']) ? 'MyUserDB' : 'MyDB';
+    $DBName =  'MyDB';
     global $$DBName;
 
     global $_CFG;
 
     $Columns = "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][RealName]} AS PreAppendName, {$_CFG[UserTable][UserPassword]} AS UserPassword, {$_CFG[UserTable][Email]} AS Email, {$_CFG[UserTable][NoticeFlag]} AS NoticeFlag";
-    $Columns = !empty($_CFG['UserDB']) ? $Columns : 'UserID, ' . $Columns;
+    $Columns = 'UserID, ' . $Columns;
     if($Where != "")
     {
-        $Where = !empty($_CFG['UserDB']) ? $Where : $Where . " AND IsDroped = '0'";
+        $Where = $Where . " AND IsDroped = '0'";
     }
     else
     {
-        $Where = !empty($_CFG['UserDB']) ? $Where : "IsDroped = '0'";
+        $Where = "IsDroped = '0'";
     }
 
     $UserList = dbGetList($_CFG['UserTable']['TableName'], $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName, $ListKey);
@@ -716,11 +707,11 @@ function testGetAllUserList($Where = '', $OrderBy = '', $Limit = '')
 {
     global $_CFG;
 
-    $DBName = !empty($_CFG['UserDB']) ? 'MyUserDB' : 'MyDB';
+    $DBName = 'MyDB';
     global $$DBName;
 
     $Columns = "{$_CFG[UserTable][UserName]} AS UserName, CONCAT(UPPER(LEFT({$_CFG[UserTable][UserName]},1)),': ',{$_CFG[UserTable][RealName]}) AS PreAppendName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email";
-    $Columns = !empty($_CFG['UserDB']) ? $Columns : 'UserID, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode, ' . $Columns;
+    $Columns = 'UserID, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode, ' . $Columns;
     return dbGetList($_CFG['UserTable']['TableName'], $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName);
 }
 

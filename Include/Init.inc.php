@@ -92,12 +92,7 @@ if ($MyDB->connect_errno) {
 
 if($_CFG['DBCharset']) $MyDB->query("SET NAMES {$_CFG['DBCharset']}");
 
-/* Connect to validating database if it's different from BugFree database and return the global DB handler --$MyUserDB. */
-if(!empty($_CFG['UserDB']))
-{
-    $MyUserDB = new mysqli($_CFG['UserDB']['Host'], $_CFG['UserDB']['User'], $_CFG['UserDB']['Password'], $_CFG['UserDB']['Database']);
-    if($_CFG['DBCharset'] == 'UTF8') $MyUserDB->Query("SET NAMES UTF8");
-}
+
 register_shutdown_function('sysCloseDB');
 
 /* Turn off the runtime magic_quotes feature. */

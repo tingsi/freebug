@@ -2,7 +2,7 @@
 <body class="AdminBody">
 {include file="Admin/AdminTopNav.tpl"}
   <div class="AdminAction">
-  {$PaginationHtml}{if !$OtherUserDB}<a href="AdminUser.php?ActionType=AddUser" class="BigButton">{$Lang.AddUser}</a>{/if}
+  {$PaginationHtml}<a href="AdminUser.php?ActionType=AddUser" class="BigButton">{$Lang.AddUser}</a>
     <form class="AdminSearch" name="SearchUserForm" method="get">
     <input type="text" id="SearchUser" name="SearchUser" value="{$SearchUser}" />
     &nbsp;
@@ -12,15 +12,15 @@
   </div>
   <table class="CommonTable AdminTable">
     <tr>
-      {if !$OtherUserDB}
-      <th>{$Lang.UserID}</th>{/if}
+
+      <th>{$Lang.UserID}</th>
       <th>{$Lang.UserName}</th>
       <th>{$Lang.AuthModeName}</th>
       <th>{$Lang.RealName}</th>
       <th>{$Lang.Email}</th>
       <th width="20%">{$Lang.GroupList}</th>
-      {if !$OtherUserDB}
-      <th>{$Lang.Edit}</th>{/if}
+
+      <th>{$Lang.Edit}</th>
       <th>{$Lang.LastModifiedBy}</th>
       <th>{$Lang.LastTime}</th>
       <th>{$Lang.AddedBy}</th>
@@ -28,14 +28,14 @@
     </tr>
     {foreach item=User from=$UserList}
     <tr{if $User.IsDroped eq '1'} class="Droped" {/if}>
-      {if !$OtherUserDB}
-      <td>{$User.UserID}</td>{/if}
+
+      <td>{$User.UserID}</td>
       <td>{$User.UserName}</td>
       <td>{$User.AuthModeName}</td>
       <td>{$User.RealName}</td>
       <td>{$User.Email}</td>
       <td>{$User.UserGroupListHTML}</td>
-      {if !$OtherUserDB}
+     
       <td>
 	    {if $templatelite.session.TestIsAdmin || $templatelite.SESSION.TestUserName eq $User.AddedBy || $templatelite.SESSION.TestUserName eq $User.UserName}
           {if $User.AuthMode != 'LDAP'}
@@ -53,7 +53,7 @@
       <td>{assign var="UserName" value=$User.LastEditedBy}{$UserNameList[$UserName]}</td>
 	  <td>{if $User.LastDate neq $CFG.ZeroTime}{$User.LastDate}{/if}</td>
 	  <td>{assign var="UserName" value=$User.AddedBy}{$UserNameList[$UserName]}</td>
-	  <td>{if $User.AddDate neq $CFG.ZeroTime}{$User.AddDate}{/if}</td>{/if}
+	  <td>{if $User.AddDate neq $CFG.ZeroTime}{$User.AddDate}{/if}</td>
     </tr>
     {/foreach}
   </table>

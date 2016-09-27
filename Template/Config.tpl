@@ -43,35 +43,6 @@ $_CFG['DB']['Host']     = '{$Config.DBHost}';
 $_CFG['DB']['Database'] = '{$Config.DBDatabase}';
 $_CFG['DB']['TablePrefix'] = '{$Config.TablePrefix}';
 
-{if $Config.UseAnotherUserDB == 'on'}
-/*
- * 4. Define the username and password of the user validating database.
- * If the user validating database is different from the BugFree database, uncomment lines below.
- */
-
-$_CFG['UserDB']['User']     = '{$Config.UserDBUser}';
-$_CFG['UserDB']['Password'] = '{$Config.UserDBPassword}';
-$_CFG['UserDB']['Host']     = '{$Config.UserDBHost}';
-$_CFG['UserDB']['Database'] = '{$Config.UserDBDatabase}';
-
-/* 5. Define validating table and it's fields. If you don't use item 4, don't change them. */
-$_CFG['UserTable']['TableName']     = '{$Config.TableName}';
-$_CFG['UserTable']['UserName']      = '{$Config.UserName}';
-$_CFG['UserTable']['RealName']      = '{$Config.RealName}';
-$_CFG['UserTable']['UserPassword']  = '{$Config.UserPassword}';
-$_CFG['UserTable']['Email']         = '{$Config.Email}';
-$_CFG['UserTable']['EncryptType']   = '{$Config.EncryptType}';    // md5|text|mysqlpassword
-{else}
-/*
- * 4. Define the username and password of the user validating database.
- * If the user validating database is different from the BugFree database, uncomment lines below.
- */
-/*
-$_CFG['UserDB']['User']     = 'root';
-$_CFG['UserDB']['Password'] = '';
-$_CFG['UserDB']['Host']     = 'localhost';
-$_CFG['UserDB']['Database'] = 'BugFree';
-*/
 
 /* 5. Define validating table and it's fields. If you don't use item 4, don't change them. */
 $_CFG['UserTable']['TableName']     = 'TestUser';
@@ -80,7 +51,7 @@ $_CFG['UserTable']['RealName']      = 'RealName';
 $_CFG['UserTable']['UserPassword']  = 'UserPassword';
 $_CFG['UserTable']['Email']         = 'Email';
 $_CFG['UserTable']['EncryptType']   = 'md5';    // md5|text|mysqlpassword|discuzuc
-{/if}
+
 
 /* 6. Query Setting. */
 $_CFG['QueryFieldNumber'] = 6;      // The fields number to query in Search*.php

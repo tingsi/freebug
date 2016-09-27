@@ -21,12 +21,9 @@ function my_escape_string($string)
  */
 function sysCloseDB()
 {
-    global $MyDB, $MyUserDB, $_CFG;
+    global $MyDB, $_CFG;
     $MyDB && $MyDB->close();
-    if(!empty($_CFG['UserDB']))
-    {
-        $MyUserDB->close();
-    }
+
 }
 
 /**
@@ -698,10 +695,6 @@ function dbGetPrefixTableNames($TableNames)
 {
     global $_CFG;
 
-    if($_CFG['UserDB']['User'] != '' && $TableNames == $_CFG['UserTable']['TableName'])
-    {
-        return $TableNames;
-    }
     $TableList = explode(',', $TableNames);
     $PrefixTableNameList = array();
     foreach($TableList as $TableName)

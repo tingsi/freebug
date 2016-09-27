@@ -19,7 +19,7 @@ if($_REQUEST['reset'])
 
 
 /* Get pagination */
-$DBName = !empty($_CFG['UserDB']) ? 'MyUserDB' : 'MyDB';
+$DBName = 'MyDB';
 global $$DBName;
 
 $Where = "(1)";
@@ -48,19 +48,13 @@ else
     }
 }
 
-
-if(!empty($_CFG['UserDB']))
-{
-    $PageWhere = "WHERE {$Where} ORDER BY {$_CFG[UserTable][UserName]} DESC";
-    $OrderBy = "{$_CFG[UserTable][UserName]} DESC";
-}
-else
 {
     //$PageWhere = "WHERE IsDroped = '0' ORDER BY UserID DESC";
     $PageWhere = "WHERE {$Where} ORDER BY UserID DESC";
     $OrderBy = "UserID DESC";
 }
-$OrderBy = !empty($_CFG['UserDB']) ? "{$_CFG[UserTable][UserName]} DESC" : "UserID DESC";
+
+$OrderBy = "UserID DESC";
 $Pagination = new Page($_CFG['UserTable']['TableName'], '', '', '', $PageWhere, '?SearchUser='.sysAddSlash($_SESSION['SearchUser']), $$DBName);
 $LimitNum = $Pagination->LimitNum();
 
@@ -88,8 +82,8 @@ $TPL->assign('UserList', $UserList);
 $TPL->assign('UserNameList', $UserNameList);
 
 /* Display the template file. */
-$OtherUserDB = !empty($_CFG['UserDB']) ? 1 : 0;
-$TPL->assign('OtherUserDB', $OtherUserDB);
+
+
 $TPL->assign('NavActiveUser', ' class="Active"');
 $TPL->assign('SearchUser', $_SESSION['SearchUser']);
 
