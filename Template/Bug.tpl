@@ -403,8 +403,7 @@
                     <textarea id="ReproSteps" name="ReproSteps" rows="11" style="overflow-y:visible;">{if $BugInfo.ReproSteps eq ''}
 {$Lang.DefaultReproSteps.Step}
 {$DefaultBugValue.StepInfo}
-{$Lang.DefaultReproSteps.Result}
-{$Lang.DefaultReproSteps.ResultInfo}
+
 {$Lang.DefaultReproSteps.ExpectResult}
 {$DefaultBugValue.ExpectResult}
 {$Lang.DefaultReproSteps.Note}{else}

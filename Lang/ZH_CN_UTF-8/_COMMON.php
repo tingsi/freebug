@@ -450,89 +450,12 @@ $_LANG['MarkForDeletions'] = array
  '1' => '是'
 );
 
-/* The fields of ResultInfo table. */
-$_LANG['ResultFields'] = array
-(
-  'ResultID'      => 'Result ID',
-  'ProjectID'     => '项目 ID',
-  'ProjectName'   => '项目名称',
-  'ModuleID'      => '模块 ID',
-  'ModulePath'    => '模块路径',
-  'CaseID'        => '相关 Case',
-  'ResultTitle'   => 'Result 标题',
-  'ResultValue'   => '执行结果',
-  'ResultStatus'  => '执行状态',
-  'ResultSteps'   => '步骤',
-  'OpenedBy'      => '创建者',
-  'OpenedDate'    => '创建日期',
-  'AssignedTo'    => '指派给',
-  'MailTo'        => '抄送给',
-  'AssignedDate'  => '指派日期',
-  'LastEditedBy'  => '最后修改者',
-  'LastEditedDate'=> '最后修改时间',
-  'ModifiedBy'    => '曾经修改者',
-  'ResultOS'      => '操作系统',
-  'ResultBrowser' => '浏览器',
-  'ResultMachine' => '机器配置',
-  'ResultBuild'   => '运行 Build',
-  'ResultKeyword' => '关键词',
-  'BugID'         => '相关 Bug'
-);
-
-/* The fields used to query in QueryCase.php.(Note: the field will be displayed in the order you defined here). */
-$_LANG['ResultQueryField'] = array
-(
-   'ResultID'       => $_LANG['ResultFields']['ResultID'],
-   'ResultTitle'    => $_LANG['ResultFields']['ResultTitle'],
-   'ProjectName'    => $_LANG['ResultFields']['ProjectName'],
-   'ModulePath'     => $_LANG['ResultFields']['ModulePath'],
-   'ResultValue'    => $_LANG['ResultFields']['ResultValue'],
-   'ResultStatus'   => $_LANG['ResultFields']['ResultStatus'],
-   'AssignedTo'     => $_LANG['ResultFields']['AssignedTo'],
-   'MailTo'         => $_LANG['ResultFields']['MailTo'],
-   'LastEditedBy'   => $_LANG['ResultFields']['LastEditedBy'],
-   'LastEditedDate' => $_LANG['ResultFields']['LastEditedDate'],
-   'OpenedBy'       => $_LANG['ResultFields']['OpenedBy'],
-   'OpenedDate'     => $_LANG['ResultFields']['OpenedDate'],
-   'ResultBuild'    => $_LANG['ResultFields']['ResultBuild'],
-   'ResultOS'       => $_LANG['ResultFields']['ResultOS'],
-   'ResultBrowser'  => $_LANG['ResultFields']['ResultBrowser'],
-   'ResultMachine'  => $_LANG['ResultFields']['ResultMachine'],
-   'ResultKeyword'  => $_LANG['ResultFields']['ResultKeyword'],
-   'CaseID'         => $_LANG['ResultFields']['CaseID'],
-   'BugID'          => $_LANG['ResultFields']['BugID'],
-   'ModifiedBy'     => $_LANG['ResultFields']['ModifiedBy'],
-);
-
-$_LANG['DefaultResultQueryFields'] = array
-(
-   'ResultID'       => $_LANG['ResultFields']['ResultID'],
-   'ResultTitle'    => $_LANG['ResultFields']['ResultTitle'],
-   'OpenedBy'       => $_LANG['ResultFields']['OpenedBy'],
-   'AssignedTo'     => $_LANG['ResultFields']['AssignedTo'],
-   'CaseID'         => $_LANG['ResultFields']['CaseID'],
-   'ResultValue'    => $_LANG['ResultFields']['ResultValue'],
-   'LastEditedDate' => $_LANG['ResultFields']['LastEditedDate'],
-);
-
-
-$_LANG['ResultStatuses'] = array
-(
- 'Completed'   => 'Completed',
- 'Investigate' => 'Investigating',
- 'Resolved'    => 'Resolved',
-);
 
 $_LANG['ResultOS']      = $_LANG['BugOS'];
 $_LANG['ResultBrowser'] = $_LANG['BugBrowser'];
 $_LANG['ResultMachine'] = $_LANG['BugMachine'];
 
-$_LANG['ResultValues'] = array
-(
- ''     => '',
- 'Pass' => 'Passed',
- 'Fail' => 'Failed',
-);
+
 
 /* nomal value. */
 $_LANG['Confirm'] = '确定';

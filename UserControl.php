@@ -27,7 +27,6 @@ function xUpdateUserControl($TestMode)
     $QueryStr = '';
 
     
-    if($TestMode == 'Bug')
     {
         $Columns = 'BugID,BugTitle';
         $Where = "OpenedBy = '{$UCTestUserName}' AND BugStatus <> 'Closed'";
@@ -52,54 +51,7 @@ function xUpdateUserControl($TestMode)
           $OpenedStr .= "{$Item[BugID]}&nbsp;<a href=\"Bug.php?BugID={$Item[BugID]}\" title=\"{$Item[BugTitle]}\" target=\"_blank\">{$Item[UCTitle]}</a><br />";
         }
     }
-    elseif($TestMode == 'Case')
-    {
-        $Columns = 'CaseID,CaseTitle';
-        $Where = "OpenedBy = '{$UCTestUserName}'";
-        $Where .= " AND IsDroped = '0' ";
-        $OrderBy = 'LastEditedDate DESC';
-        $OpenedList = dbGetList('CaseInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-        $OpenedList = testSetCaseListMultiInfo($OpenedList);
 
-        $Where = "AssignedTo = '{$UCTestUserName}'";
-        $Where .= " AND IsDroped = '0' ";
-        $AssignedList = dbGetList('CaseInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-        $AssignedList = testSetCaseListMultiInfo($AssignedList);
-
-        foreach($AssignedList as $Item)
-        {
-          $AssignedStr .= "{$Item[CaseID]}&nbsp;<a href=\"Case.php?CaseID={$Item[CaseID]}\" title=\"{$Item[CaseTitle]}\" target=\"_blank\">{$Item[UCTitle]}</a><br />";
-        }
-
-        foreach($OpenedList as $Item)
-        {
-          $OpenedStr .= "{$Item[CaseID]}&nbsp;<a href=\"Case.php?CaseID={$Item[CaseID]}\" title=\"{$Item[CaseTitle]}\" target=\"_blank\">{$Item[UCTitle]}</a><br />";
-        }
-    }
-    elseif($TestMode == 'Result')
-    {
-        $Columns = 'ResultID,ResultTitle';
-        $Where = "OpenedBy = '{$UCTestUserName}'";
-        $Where .= " AND IsDroped = '0' ";
-        $OrderBy = 'LastEditedDate DESC';
-        $OpenedList = dbGetList('ResultInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-        $OpenedList = testSetResultListMultiInfo($OpenedList);
-
-        $Where = "AssignedTo = '{$UCTestUserName}'";
-        $Where .= " AND IsDroped = '0' ";
-        $AssignedList = dbGetList('ResultInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-        $AssignedList = testSetResultListMultiInfo($AssignedList);
-
-        foreach($AssignedList as $Item)
-        {
-          $AssignedStr .= "{$Item[ResultID]}&nbsp;<a href=\"Result.php?ResultID={$Item[ResultID]}\" title=\"{$Item[ResultTitle]}\" target=\"_blank\">{$Item[UCTitle]}</a><br />";
-        }
-
-        foreach($OpenedList as $Item)
-        {
-          $OpenedStr .= "{$Item[ResultID]}&nbsp;<a href=\"Result.php?ResultID={$Item[ResultID]}\" title=\"{$Item[ResultTitle]}\" target=\"_blank\">{$Item[UCTitle]}</a><br />";
-        }
-    }
 
     $Where = "UserName = '{$UCTestUserName}' AND QueryType = '{$TestMode}'";
     $OrderBy = 'QueryTitle ASC';
@@ -134,7 +86,7 @@ if($_GET['DelQueryID'] != '')
     exit;
 }
 
-if($TestMode == 'Bug')
+
 {
     $Columns = 'BugID,BugTitle';
     $Where = "OpenedBy = '{$UCTestUserName}' AND BugStatus <> 'Closed'";
@@ -148,34 +100,7 @@ if($TestMode == 'Bug')
     $AssignedList = dbGetList('BugInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
     $AssignedList = testSetBugListMultiInfo($AssignedList);
 }
-elseif($TestMode == 'Case')
-{
-    $Columns = 'CaseID,CaseTitle';
-    $Where = "OpenedBy = '{$UCTestUserName}'";
-    $Where .= " AND IsDroped = '0' ";
-    $OrderBy = 'LastEditedDate DESC';
-    $OpenedList = dbGetList('CaseInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-    $OpenedList = testSetCaseListMultiInfo($OpenedList);
 
-    $Where = "AssignedTo = '{$UCTestUserName}'";
-    $Where .= " AND IsDroped = '0' ";
-    $AssignedList = dbGetList('CaseInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-    $AssignedList = testSetCaseListMultiInfo($AssignedList);
-}
-elseif($TestMode == 'Result')
-{
-    $Columns = 'ResultID,ResultTitle';
-    $Where = "OpenedBy = '{$UCTestUserName}'";
-    $Where .= " AND IsDroped = '0' ";
-    $OrderBy = 'LastEditedDate DESC';
-    $OpenedList = dbGetList('ResultInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-    $OpenedList = testSetResultListMultiInfo($OpenedList);
-
-    $Where = "AssignedTo = '{$UCTestUserName}'";
-    $Where .= " AND IsDroped = '0' ";
-    $AssignedList = dbGetList('ResultInfo',$Columns, $Where, '', $OrderBy, $LimitNum);
-    $AssignedList = testSetResultListMultiInfo($AssignedList);
-}
 
 $Where = "UserName = '{$UCTestUserName}' AND QueryType = '{$TestMode}'";
 $OrderBy = 'QueryTitle ASC';

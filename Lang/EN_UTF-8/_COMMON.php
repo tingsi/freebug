@@ -450,89 +450,10 @@ $_LANG['MarkForDeletions'] = array
  '1' => 'Yes'
 );
 
-/* The fields of ResultInfo table. */
-$_LANG['ResultFields'] = array
-(
-  'ResultID'      => 'Result ID',
-  'ProjectID'     => 'Project ID',
-  'ProjectName'   => 'Project Name',
-  'ModuleID'      => 'Module ID',
-  'ModulePath'    => 'Module Path',
-  'CaseID'        => 'Related Case',
-  'ResultTitle'   => 'Result Title',
-  'ResultValue'   => 'Result',
-  'ResultStatus'  => 'Status',
-  'ResultSteps'   => 'Steps',
-  'OpenedBy'      => 'Opened By',
-  'OpenedDate'    => 'Open Date',
-  'AssignedTo'    => 'Assigned To',
-  'MailTo'        => 'Mail To',
-  'AssignedDate'  => 'Assign Date',
-  'LastEditedBy'  => 'Last Edited By',
-  'LastEditedDate'=> 'Last Edit Date',
-  'ModifiedBy'    => 'Ever Changed By',
-  'ResultOS'      => 'OS',
-  'ResultBrowser' => 'Browser',
-  'ResultMachine' => 'Machine',
-  'ResultBuild'   => 'Build',
-  'ResultKeyword' => 'Keywords',
-  'BugID'         => 'Related Bugs'
-);
-
-/* The fields used to query in QueryCase.php.(Note: the field will be displayed in the order you defined here). */
-$_LANG['ResultQueryField'] = array
-(
-   'ResultID'       => $_LANG['ResultFields']['ResultID'],
-   'ResultTitle'    => $_LANG['ResultFields']['ResultTitle'],
-   'ProjectName'    => $_LANG['ResultFields']['ProjectName'],
-   'ModulePath'     => $_LANG['ResultFields']['ModulePath'],
-   'ResultValue'    => $_LANG['ResultFields']['ResultValue'],
-   'ResultStatus'   => $_LANG['ResultFields']['ResultStatus'],
-   'AssignedTo'     => $_LANG['ResultFields']['AssignedTo'],
-   'MailTo'         => $_LANG['ResultFields']['MailTo'],
-   'LastEditedBy'   => $_LANG['ResultFields']['LastEditedBy'],
-   'LastEditedDate' => $_LANG['ResultFields']['LastEditedDate'],
-   'OpenedBy'       => $_LANG['ResultFields']['OpenedBy'],
-   'OpenedDate'     => $_LANG['ResultFields']['OpenedDate'],
-   'ResultBuild'    => $_LANG['ResultFields']['ResultBuild'],
-   'ResultOS'       => $_LANG['ResultFields']['ResultOS'],
-   'ResultBrowser'  => $_LANG['ResultFields']['ResultBrowser'],
-   'ResultMachine'  => $_LANG['ResultFields']['ResultMachine'],
-   'ResultKeyword'  => $_LANG['ResultFields']['ResultKeyword'],
-   'CaseID'         => $_LANG['ResultFields']['CaseID'],
-   'BugID'          => $_LANG['ResultFields']['BugID'],
-   'ModifiedBy'     => $_LANG['ResultFields']['ModifiedBy'],
-);
-
-$_LANG['DefaultResultQueryFields'] = array
-(
-   'ResultID'       => $_LANG['ResultFields']['ResultID'],
-   'ResultTitle'    => $_LANG['ResultFields']['ResultTitle'],
-   'OpenedBy'       => $_LANG['ResultFields']['OpenedBy'],
-   'AssignedTo'     => $_LANG['ResultFields']['AssignedTo'],
-   'CaseID'         => $_LANG['ResultFields']['CaseID'],
-   'ResultValue'    => $_LANG['ResultFields']['ResultValue'],
-   'LastEditedDate' => $_LANG['ResultFields']['LastEditedDate'],
-);
-
-
-$_LANG['ResultStatuses'] = array
-(
- 'Completed'   => 'Completed',
- 'Investigate' => 'Investigating',
- 'Resolved'    => 'Resolved',
-);
-
 $_LANG['ResultOS']      = $_LANG['BugOS'];
 $_LANG['ResultBrowser'] = $_LANG['BugBrowser'];
 $_LANG['ResultMachine'] = $_LANG['BugMachine'];
 
-$_LANG['ResultValues'] = array
-(
- ''     => '',
- 'Pass' => 'Passed',
- 'Fail' => 'Failed',
-);
 
 /* nomal value. */
 $_LANG['Confirm'] = 'Confirm';

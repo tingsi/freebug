@@ -307,18 +307,6 @@ function apiAddItem($ItemType, $FieldsValue)
     global $Charset;    
     global $bfUser;
     $ItemInfo = array();
-    if($ItemType == 'Result')
-    {
-        $CaseInfo = dbGetRow('CaseInfo',$Coumns,"CaseID = '{$_REQUEST[CaseID]}'  AND {$_SESSION[TestUserACLSQL]} AND IsDroped = '0'");
-        if(!empty($CaseInfo))
-        {
-            $ItemInfo['ResultTitle'] = $CaseInfo['CaseTitle'];
-            $ItemInfo['ProjectID'] = $CaseInfo['ProjectID'];
-            $ItemInfo['ModuleID'] = $CaseInfo['ModuleID'];
-            $ItemInfo['ResultSteps'] = $CaseInfo['CaseSteps'];
-            $ItemInfo['CaseID'] = $CaseInfo['CaseID'];
-        }
-    }
 
     foreach($FieldsValue as $FieldName => $DefaultValue)
     {

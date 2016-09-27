@@ -48,8 +48,6 @@ $BugFree1TableList = array(
 
 $BugFree2TableList = array(
 $TablePrefix."BugInfo",
-$TablePrefix."CaseInfo",
-$TablePrefix."ResultInfo",
 $TablePrefix."TestAction",
 $TablePrefix."TestFile",
 $TablePrefix."TestHistory",

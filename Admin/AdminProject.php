@@ -36,8 +36,7 @@ else
         dbUpdateRow('TestProject', 'IsDroped', "'$IsDroped'", 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) ."'",'LastDate', 'now()', "ProjectID = {$_GET[ProjectID]}");
         dbUpdateRow('TestModule', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
         dbUpdateRow('BugInfo', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
-        dbUpdateRow('CaseInfo', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
-        dbUpdateRow('ResultInfo', 'IsDroped', "'$IsDroped'", "ProjectID = {$_GET[ProjectID]}");
+
         // and update bug ,case, result
         $BackUrl = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : 'AdminProjectList.php';
         jsGoTo($BackUrl);

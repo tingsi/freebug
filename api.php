@@ -69,7 +69,7 @@ switch($Mode)
         break;
 
     // add bug, case, result
-    case 'addbug': case 'addcase': case 'addresult':
+    case 'addbug': 
         preg_match('/^add(bug|case|result)$/', $Mode, $regs);
         $lowerItem = $regs[1];
         $Item = ucfirst($lowerItem);
@@ -82,11 +82,7 @@ switch($Mode)
         else
         {
             $ProjectID = $bfUser->Param['ProjectID'];
-            if($Mode == 'addresult')
-            {
-                $CaseInfo = dbGetRow('CaseInfo',$Coumns,"CaseID = '{$_REQUEST[CaseID]}'  AND {$_SESSION[TestUserACLSQL]} AND IsDroped = '0'");
-                if(!empty($CaseInfo['ProjectID'])) $ProjectID = $CaseInfo['ProjectID'];
-            }
+
             if($_SESSION['TestUserACL'][$ProjectID] != 'All')
             {
                 echo "error=" . 'API_ERROR_NOPERMISSION';

@@ -56,26 +56,6 @@ if($ActionType == 'OpenBug')
     $DefaultBugValue['ExpectResult'] = '';
     $ModuleSelected = $ModuleID;
 
-    if($_GET['ResultID'] != '')
-    {
-        $ResultID = $_GET['ResultID'];
-        $ResultInfo = dbGetRow('ResultInfo',$Columns,"ResultID = '{$ResultID}' AND {$_SESSION[TestUserACLSQL]}");
-        if(!empty($ResultInfo))
-        {
-            $ProjectID = $ResultInfo['ProjectID'];
-            $ResultModuleID = $ResultInfo['ModuleID'];
-            $ModuleInfo = dbGetRow('TestModule','ModuleName',"ModuleID = '{$ResultModuleID}'");
-            $ModuleSelected = $ModuleInfo['ModuleName'];
-            $BugInfo['BugTitle'] = $ResultInfo['ResultTitle'];
-            $BugInfo['ProjectID'] = $ResultInfo['ProjectID'];
-            $BugInfo['BugOS'] = $ResultInfo['ResultOS'];
-            $BugInfo['BugBrowser'] = $ResultInfo['ResultBrowser'];
-            $BugInfo['BugMachine'] = $ResultInfo['ResultMachine'];
-            $BugInfo['OpenedBuild'] = $ResultInfo['ResultBuild'];
-            $BugInfo['ReproSteps'] = $ResultInfo['ResultSteps'];
-            $BugInfo['ResultID'] = $ResultID;
-        }
-    }
 }
 else
 {
