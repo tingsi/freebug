@@ -34,9 +34,12 @@ $_CFG['DBCharset']         = 'UTF8';
  * 4. LDAP 认证设置
  */
 /*
-$_CFG['LDAP']['Host']   = 'localhost';
-$_CFG['LDAP']['Port']   =   389;
-$_CFG['LDAP']['Base']   =   '';
+$_CFG['LDAP']['Url']    = 'ldap://localhost';
+$_CFG['LDAP']['Binddn']   =   'cn=admin,dc=xiaokebang,dc=com';
+$_CFG['LDAP']['BindPw']   =   '123456';
+$_CFG['LDAP']['Base']   = 'dc=xiaokebang,dc=com';
+$_CFG['LDAP']['Login']   = 'uid';
+$_CFG['LDAP']['UserName']   = 'cn';
 */
 
 /* 5. Define validating table and it's fields. don't change them. */
