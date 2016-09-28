@@ -1,12 +1,12 @@
 <?php
 /**
- * BugFree is free software under the terms of the FreeBSD License.
+ * vim: sts=4 ts=4 sw=4 cindent fdm=marker expandtab nu
  *
- * Module functions library of BugFree system.
- *
- * @link        http://www.bugfree.org.cn
- * @package     BugFree
  */
+
+
+require_once("FuncLdap.inc.php");
+
 
 //------------------------- BASE FUNCTIONS -----------------------------------//
 /**
@@ -58,11 +58,11 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
         {
             if($DBTestUserInfo['AuthMode'] == 'LDAP')
             {
-                $TestUserInfo = ldapJudgeUser($TestUserName,$TestUserPWD);
-                if(!empty($TestUserInfo))
+                $TestUserInfo = ldapLogin($TestUserName,$TestUserPWD);
+                if($TestUserInfo)
                 {
                     $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
-                    
+
                     if($TestUserInfo['RealName'] == '')
                     {
                         $TestUserInfo['RealName'] = $DBTestUserInfo['RealName'];
@@ -71,13 +71,13 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                     {
                         $TestUserInfo['Email'] = $DBTestUserInfo['Email'];
                     }
-                     
+
                     dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$TestUserInfo[RealName]}'"
-                                                           , 'UserPassword', "'{$TestUserPWD}'"
-                                                           , 'Email', "'{$TestUserInfo[Email]}'"
-                                                           , 'LastEditedBy', "'" . my_escape_string($TestUserInfo['UserName']) . "'"
-                                                           , 'LastDate', 'now()'
-                                                           , "UserName = '" . my_escape_string($TestUserName) ."'");
+                            , 'UserPassword', "'{$TestUserPWD}'"
+                            , 'Email', "'{$TestUserInfo[Email]}'"
+                            , 'LastEditedBy', "'" . my_escape_string($TestUserInfo['UserName']) . "'"
+                            , 'LastDate', 'now()'
+                            , "UserName = '" . my_escape_string($TestUserName) ."'");
                 }
             }
             else
@@ -89,7 +89,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
 
                 $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
                 $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email"
-                                                        ,  $Where , $$DBName);
+                        ,  $Where , $$DBName);
             }
         }
     }
@@ -99,72 +99,6 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
     return $TestUserInfo;
 }
 
-
-function ldapJudgeUser($TestUserName,$TestUserPWD, $STestUserName = '')
-{
-    global $_CFG;
-
-    $TestUserInfo = array();
-
-    // LDAP variables
-    $ldap['host'] = $_CFG['LDAP']['Host'];
-    $ldap['port'] = $_CFG['LDAP']['Port'];
-    $ldap['base'] = $_CFG['LDAP']['Base'];
-
-    $ldap['user'] = $TestUserName;
-    $ldap['pass'] = $TestUserPWD;
-    $ldap['dn'] = $ldap['user'];
-   
-    if(function_exists('ldap_connect'))
-    { 
-        // connecting to ldap
-        $ldap['conn'] = @ldap_connect( $ldap['host'], $ldap['port'] );
-        
-        // binding to ldap
-        if($ldap['conn'])
-        {
-            $ldap['bind'] = @ldap_bind($ldap['conn'], $ldap['dn'], $ldap['pass'] );
-        
-            if($ldap['bind'] )
-            {
-                if($STestUserName == '')
-                {
-                    $DomainName = current(explode("\\", $TestUserName));
-                    $STestUserName = end(explode("\\", $TestUserName));
-                }
-                else
-                {
-                    $DomainName = current(explode("\\", $STestUserName));
-                    $STestUserName = end(explode("\\", $STestUserName));
-                }
-                $ldap['result'] = @ldap_search( $ldap['conn'], $ldap['base'], 'sAMAccountName=' . $STestUserName);
-                if($ldap['result'] )
-                {
-                    // retrieve all the entries from the search result
-                    $ldap['info'] = @ldap_get_entries( $ldap['conn'], $ldap['result'] );
-                    if( $ldap['info']['count'] >= '1')
-                    {
-                        foreach($ldap['info'] as $key => $ldap_info)
-                        {
-                        //$ldap_info = end($ldap['info']);
-
-                       
-                        if($domain == $DomainName)
-                        {
-                            $TestUserInfo['UserName'] = $TestUserName;
-                            $TestUserInfo['RealName'] = iconv('gbk','utf-8',$ldap_info['displayname']['0']);
-                            $TestUserInfo['Email'] = $ldap_info['mail']['0'];
-                            break;
-                        }
-                        }
-                    }
-                }
-            }
-        }
-        @ldap_close( $ldap['conn'] );
-    }
-    return $TestUserInfo;
-}
 
 /**
  * Encrypt the password according to the EncryptType defined in Config.inc.php.
@@ -2750,48 +2684,16 @@ function xAdminAddUser($UserForm)
 
     if($UserForm['AuthMode'] == 'LDAP')
     {
-        if(!preg_match("/^[_\.0-9a-z-]+\\\\[_\.0-9a-z-]+$/i", sysStripSlash($UserForm['UserName'])))
+        $TestUserInfo = ldapSearchUser($UserForm['UserName']);
+        if(empty($TestUserInfo))
         {
-            $ErrorMsg[] = $_LANG['InvalidLDAPUserNameFormat'];
+            $ErrorMsg[] = $_LANG['LDAPUserNotFound'];
         }
         else
         {
-            $TestUserInfo = ldapJudgeUser($_SESSION['DomainTestUserName'],$_SESSION['DomainTestUserPWD']);
-            if(empty($TestUserInfo))
-            {
-                if(empty($_SERVER["PHP_AUTH_USER"]) || empty($_SERVER["PHP_AUTH_PW"]))
-                {
-                    header ( "WWW-Authenticate: Basic realm=\"\"");
-                    header('HTTP/1.0 401 Unauthorized');
-                    return $objResponse;
-                }
-                else
-                {
-                    $_SESSION['DomainTestUserName'] = $_SERVER["PHP_AUTH_USER"];
-                    $_SESSION['DomainTestUserPWD'] = $_SERVER["PHP_AUTH_PW"];
-                    $TestUserInfo = ldapJudgeUser($_SESSION['DomainTestUserName'],$_SESSION['DomainTestUserPWD']);
-                }
-            }
-            if(empty($TestUserInfo))
-            {
-                header ( "WWW-Authenticate: Basic realm=\"\"");
-                header('HTTP/1.0 401 Unauthorized');
-                return $objResponse;
-            }
-            else
-            {
-                $TestUserInfo = ldapJudgeUser($_SESSION['DomainTestUserName'],$_SESSION['DomainTestUserPWD'],$UserForm['UserName']);
-                if(empty($TestUserInfo))
-                {
-                    $ErrorMsg[] = $_LANG['LDAPUserNotFound'];
-                }
-                else
-                {
-                    $UserForm['RealName'] = $TestUserInfo['RealName'];
-                    $UserForm['Email'] = $TestUserInfo['Email'];
-                    $UserForm['UserPassword'] = baseEncryptUserPWD(time());
-                }
-            }
+            $UserForm['RealName'] = $TestUserInfo['RealName'];
+            $UserForm['Email'] = $TestUserInfo['Email'];
+            $UserForm['UserPassword'] = baseEncryptUserPWD(time());
         }
     }
     else
@@ -3310,4 +3212,4 @@ function selectDivProjectUserList($SearchUserName, $ProjectID)
     $SelectDiv = array('Key'=>join(',',$TempKeyArray), 'Value'=>join(',',$TempValueArray));
     return $SelectDiv;
 }
-?>
+
