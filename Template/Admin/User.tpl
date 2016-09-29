@@ -14,8 +14,8 @@
       <dd>
         {if $ActionType eq 'AddUser'}
         <select id="AuthMode" name="AuthMode" onchange="changeRPE();">
-            <option value="DB">{$Lang.AuthMode.DB}</option>
             <option value="LDAP">{$Lang.AuthMode.LDAP}</option>
+            <option value="DB">{$Lang.AuthMode.DB}</option>
         </select>
         {else}
         {$UserInfo.AuthModeName}

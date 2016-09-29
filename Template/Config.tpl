@@ -77,9 +77,7 @@ $_CFG['Mail']['SendParam']['SMTPAuth'] = {$Config.SmtpAuth};    // Whether or no
 $_CFG['Mail']['SendParam']['Username'] = '{$Config.SmtpUserName}';       // The username to use for SMTP authentication.eg:bugfree@bugfree.org.cn.
 $_CFG['Mail']['SendParam']['Password'] = '{$Config.SmtpPassword}';       // The password to use for SMTP authentication.
 
-/* 10. Auto update. We recommend you to set this to true, thus you can keep update with the latest version. */
 $_CFG['Version']    = '2.0';    // Don't change.
-$_CFG['AutoUpdate'] = true;     // true|false.
 
 /* 11. Config the template's dir and its compile dir. */
 $_CFG['TemplateDir']    = $_CFG['RealRootPath'] . '/Template';
