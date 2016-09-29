@@ -13,7 +13,7 @@
  *                and end year values. (Monte)
  *            1.2 added support for yyyy-mm-dd syntax for
  *                time value. (Jan Rosier)
- *            1.3 added support for choosing format for
+ *            1.3 added support for choosing format for 
  *                month values (Gary Loescher)
  *            1.3.1 added support for choosing format for
  *                day values (Marcus Bointon)

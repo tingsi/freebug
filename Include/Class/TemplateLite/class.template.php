@@ -92,7 +92,7 @@ class Template_Lite {
 	var $_sections = array();
 	var $_foreach = array();
 
-	function __construct()
+	function Template_Lite()
 	{
 		$this->_version_date = strtotime($this->_version_date);
 	}
