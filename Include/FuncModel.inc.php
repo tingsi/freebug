@@ -7,7 +7,6 @@
 
 require_once("FuncLdap.inc.php");
 
-
 //------------------------- BASE FUNCTIONS -----------------------------------//
 /**
  * Get Current Mode: Bug, Case or Result
@@ -72,7 +71,9 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                         $TestUserInfo['Email'] = $DBTestUserInfo['Email'];
                     }
 
-                    dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$TestUserInfo[RealName]}'"
+#update email at login only, no need to update DiaplayName. 
+                    dbUpdateRow($_CFG['UserTable']['TableName']
+#                            , 'RealName', "'{$TestUserInfo[RealName]}'"
                             , 'UserPassword', "'{$TestUserPWD}'"
                             , 'Email', "'{$TestUserInfo[Email]}'"
                             , 'LastEditedBy', "'" . my_escape_string($TestUserInfo['UserName']) . "'"
