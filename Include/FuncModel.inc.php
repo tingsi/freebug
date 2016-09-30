@@ -6,6 +6,7 @@
 
 
 require_once("FuncLdap.inc.php");
+#ldapListUser();
 
 //------------------------- BASE FUNCTIONS -----------------------------------//
 /**

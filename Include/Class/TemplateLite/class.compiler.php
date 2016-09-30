@@ -482,7 +482,8 @@ class Template_Lite_Compiler extends Template_Lite {
 				}
 				else
 				{
-					$this->trigger_error($function." function does not exist", E_USER_ERROR, __FILE__, __LINE__);
+# $this->trigger_error($function." function does not exist", E_USER_ERROR, __FILE__, __LINE__);
+error_log($function." function does not exist" .  __FILE__ .  __LINE__);
 				}
 				break;
 		}

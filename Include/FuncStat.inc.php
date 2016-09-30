@@ -549,54 +549,35 @@ function reportSetFullTypeInfo($DataSetList, $FullTypeArray, $SetEmpty = false, 
     return $DataSetList;
 }
 
-function reportCreateSingleXmlStr($DataSetList, $GraphOption=array(), $DisplayNullValue = true, $ShowByRange = true)
+
+function reportCreateDataJsonStr($DataSetList, $caption)
 {
-    global $FC_ColorCounter;
+    $background = array();
+    $border = array();
+    $vals = array();
+    $labels = array();
 
-    if($ShowByRange)
-    {
-        $MaxRange = 26;
-        $DataSetCount = count($DataSetList);
-        $RangeValue = floor($DataSetCount/$MaxRange);
-        if($MaxRange >= $DataSetCount)
-        {
-            $ShowByRange = false;
-        }
-    }
-
-    $XmlStr = '<graph ';
-    foreach($GraphOption as $Key => $Value)
-    {
-        $XmlStr .= "{$Key}='{$Value}' ";
-    }
-    if($ShowByRange)
-    {
-        $XmlStr .= "showValues = '0'";
-    }
-    $XmlStr .= '>';
-    $Num = 0;
     foreach($DataSetList as $Name => $Value)
     {
-        $Color = getFCColor();
-        if(!empty($Value[SetValue])||$DisplayNullValue)
-        {
-            if($ShowByRange && $RangeValue > 0 && $Num%$RangeValue != 0)
-            {
-                $ShowVN = " showValue= '0' showName='0'";
-            }
-            else
-            {
-                $ShowVN = "";
-            }
-            $XmlStr .= "<set name='{$Value[SetName]}' value='{$Value[SetValue]}' color='{$Color}' {$ShowVN}/>";
-        }
-        $Num ++;
+        $color = getFCColor();
+        $border []= $color;
+        $background []= $color;
+        $labels []= $Value['SetName'];
+        $vals []= $Value['SetValue'];
     }
+    $data = Array( 'labels'=> $labels, 'datasets'=> 
+            Array(Array( 
+                'label' => $caption, 
+                'data' => $vals, 
+                'backgroundColor' => $background, 
+                'borderColor' => $border, 
+                'borderWidth' => 1)));
 
-    $XmlStr .= '</graph>';
-    $FC_ColorCounter = 0;
+    $json = json_encode($data,JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
 
-    return $XmlStr;
+    resetColor();
+
+    return $json;
 }
 
 function reportInterceptDataList($DataSetList, $InterceptType, $InterceptValue)
@@ -654,18 +635,18 @@ function reportInterceptDataList($DataSetList, $InterceptType, $InterceptValue)
 
 function reportCreatePieNoteStr($DataSetList, $GraphOption=array())
 {
-    global $FC_ColorCounter;
-
     $CycleColor = array('#EEEEEE','#F9F9F9');
     $NoteStr = '<center><table class="CommonTable ListTable BugMode" style="border:0;width:50%">';
+    $index = 0;
     foreach($DataSetList as $Name => $Value)
     {
+        $index++;
         if(empty($Value[SetValue]))
         {
             $Value[SetValue] = 0;
         }
         $Color = getFCColor();
-        $Cycle = $FC_ColorCounter % 2;
+        $Cycle = $index % 2;
         $NoteStr .= <<<EOT
 <tr style='background-color:{$CycleColor[$Cycle]};'>
   <td valign="middle" align="center" width="15" height="10px">
@@ -679,8 +660,8 @@ EOT;
     }
 
     $NoteStr .= '</table></center><br />';
-    $FC_ColorCounter = 0;
+
+    resetColor();
 
     return $NoteStr;
 }
-?>

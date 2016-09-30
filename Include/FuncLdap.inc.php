@@ -190,6 +190,9 @@ function ldapListUser(){
         $Users []= $User;
     } while ($entry = ldap_next_entry($ldap, $entry));
 
+#    error_log(print_r($Users, true));
+
+
 
     ldap_close($ldap);
 

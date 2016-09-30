@@ -11,10 +11,10 @@
 require('Include/Init.inc.php');
 require('Include/FC_Colors.php');
 require('Include/FuncStat.inc.php');
-require('Include/FusionCharts.php');
+require('Include/Charts.php');
 
-$Width = 550;
-$Height = 350;
+$Width = 320;
+$Height = 240;
 
 $ReportMode = $_GET['ReportMode'] == '' ? 'Bug' : $_GET['ReportMode'];
 if($_POST['ReportSubmit'])
@@ -42,8 +42,8 @@ foreach($ReportTypeList as $Key => $ReportType)
     if(function_exists($ReportFunc))
     {
         $DataSetList = $ReportFunc($ReportCondition);
-        $ReportSWFType = $_CFG['ReportTypeSWF'][$ReportType];
-        $GraphOption = $_CFG['ReportGraphOption'][$ReportSWFType];
+        $chartType = $_CFG['ReportTypeSWF'][$ReportType]; //'bar','pie' from 'bugs','case'
+        $GraphOption = $_CFG['ReportGraphOption'][$chartType];
         if(!empty($_CFG['ReportTypeGraphOption'][$ReportType]))
         {
             $GraphOption = array_merge($GraphOption,$_CFG['ReportTypeGraphOption'][$ReportType]);
@@ -61,14 +61,19 @@ foreach($ReportTypeList as $Key => $ReportType)
             $GraphOption['yAxisName'] = $_LANG["Report{$ReportMode}Count"];
         }
 
-        if(preg_match('/pie/i',$_CFG['FCFSWFType'][$ReportSWFType]))
+        if(preg_match('/pie/i',$chartType))
         {
             $NoteStr = reportCreatePieNoteStr($DataSetList);
             $DisplayNullValue = false;
         }
 
-        $XmlStr = reportCreateSingleXmlStr($DataSetList,$GraphOption, $DisplayNullValue);
-        $FCScriptList[$Key] = renderChart('Charts/'.$_CFG['FCFSWFType'][$ReportSWFType], '', $XmlStr, $Key, $Width, $Height);
+        $caption   = $GraphOption['caption'];
+        $xAxis     = $GraphOption['xAxisName'];
+        $yAxis     = $GraphOption['yAxisName'];
+
+        $dataStr = reportCreateDataJsonStr($DataSetList,$caption);
+
+        $FCScriptList[$Key] = renderChart($chartType, $dataStr, $Key, $Width, $Height);
         $FCLegendList[$Key] = $_LANG[$ReportMode.'ReportType'][$ReportType];
         $FCNoteList[$Key] = $NoteStr;
         $FCScriptCount ++;
@@ -82,4 +87,3 @@ $TPL->assign('FCNoteList', $FCNoteList);
 
 /* Display. */
 $TPL->display('ReportRight.tpl');
-?>

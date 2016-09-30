@@ -6,6 +6,6 @@
 <link href="Css/Basic.css" rel="stylesheet" type="text/css">
 {$xajax_javascript}
 <script src="JS/Main.js"></script>
-<script src="JS/Chart.bundle.min.js"></script>
+<script src="JS/Chart.bundle.js"></script>
 <title>{$Lang.ProductName}-{$HeaderTitle}</title>
 </head>

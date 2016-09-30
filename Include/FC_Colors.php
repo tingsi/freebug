@@ -1,11 +1,4 @@
 <?php
-//This page contains an array of colors to be used as default set of colors for FusionCharts
-//arr_FCColors is the array that would contain the hex code of colors
-//ALL COLORS HEX CODES TO BE USED WITHOUT #
-
-
-//We also initiate a counter variable to help us cyclically rotate through
-//the array of colors.
 $FC_ColorCounter=0;
 
 $arr_FCColors[0] = "1941A5" ;//Dark Blue
@@ -42,6 +35,11 @@ function getFCColor()
 	//Update index
 	$FC_ColorCounter++;
 	//Return color
-	return($arr_FCColors[$FC_ColorCounter % count($arr_FCColors)]);
+	return('#' . $arr_FCColors[$FC_ColorCounter % count($arr_FCColors)]);
 }
-?>
+
+function resetColor()
+{
+	global $FC_ColorCounter;
+	$FC_ColorCounter = 0;
+}
