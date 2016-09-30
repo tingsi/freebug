@@ -25,7 +25,7 @@
  * @param string
  * @param Smarty
  */
- 
+
 function template_outputfilter_trimwhitespace($tpl_source, &$template_object)
 {
     // Pull out the script blocks

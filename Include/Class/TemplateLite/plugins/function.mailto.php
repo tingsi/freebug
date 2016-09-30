@@ -23,7 +23,7 @@
  *           newsgroups = (optional) newsgroup(s) to post to
  *           followupto = (optional) address(es) to follow up to
  *           extra = (optional) extra tags for the href link
- * 
+ *
  * Examples: {mailto address="me@domain.com"}
  *           {mailto address="me@domain.com" encode="javascript"}
  *           {mailto address="me@domain.com" encode="hex"}

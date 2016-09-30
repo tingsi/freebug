@@ -16,7 +16,7 @@ function template_generate_debug_output(&$object)
         ksort($config_vars);
         $object->assign("_debug_config_keys", array_keys($config_vars));
         $object->assign("_debug_config_vals", array_values($config_vars));
-    }   
+    }
 
     $included_templates = $object->_templatelite_debug_info;
 

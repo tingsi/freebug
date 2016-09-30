@@ -65,7 +65,7 @@ class Template_Lite_Compiler extends Template_Lite {
     var $_obj_params_regexp     =   null;
 	var $_templatelite_vars		=	array();
 
-	function Template_Lite_compiler()
+	function __construct()
 	{
 		// matches double quoted strings:
 		// "foobar"
@@ -156,7 +156,7 @@ class Template_Lite_Compiler extends Template_Lite {
 		}
 
 		// remove all comments
-		$file_contents = preg_replace("!{$ldq}\*.*?\*{$rdq}!se","",$file_contents);
+		$file_contents = preg_replace("!{$ldq}\*.*?\*{$rdq}!s","",$file_contents);
 
 		// replace all php start and end tags
 		$file_contents = preg_replace('%(<\?(?!php|=|$))%i', '<?php echo \'\\1\'?>'."\n", $file_contents);
@@ -688,7 +688,7 @@ class Template_Lite_Compiler extends Template_Lite {
 			//   just get everything from the $ to the ending space and parse it
 			// if the $ is escaped, then we won't expand it
 			$_result = "";
-			preg_match_all('/(?:[^\\\]' . $this->_dvar_regexp . ')/', substr($variable, 1, -1), $_expand);  // old match 
+			preg_match_all('/(?:[^\\\]' . $this->_dvar_regexp . ')/', substr($variable, 1, -1), $_expand);  // old match
 //			preg_match_all('/(?:[^\\\]' . $this->_dvar_regexp . '[^\\\])/', $variable, $_expand);
 			$_expand = array_unique($_expand[0]);
 			foreach($_expand as $key => $value)

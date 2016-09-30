@@ -35,7 +35,7 @@ function compile_compile_custom_block($function, $modifiers, $arguments, &$_resu
 				}
 				$_args[$key] = "'$key' => $value";
 			}
-			$_result = "<?php \$this->_tag_stack[] = array(\"$function\", array(".implode(',', (array)$_args).")); ";
+			$_result = "<?php \$this->_tag_stack[] = array('$function', array(".implode(',', (array)$_args).")); ";
 			$_result .= $function . '(array(' . implode(',', (array)$_args) .'), null, $this); ';
 			$_result .= 'ob_start(); ?>';
 		}

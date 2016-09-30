@@ -16,7 +16,7 @@ function tpl_function_html_options($params, &$tpl)
 	$options = null;
 	$selected = array();
 	$extra = '';
-  
+
 	foreach($params as $_key => $_val)
 	{
 		switch($_key)
@@ -32,7 +32,7 @@ function tpl_function_html_options($params, &$tpl)
 				$$_key = array_values((array)$_val);
 				break;
 			case 'selected':
-				$$_key = array_values((array)$_val);      
+				$$_key = array_values((array)$_val);
 				break;
 			default:
 				if(!is_array($_key))
@@ -52,7 +52,7 @@ function tpl_function_html_options($params, &$tpl)
 	{
 		foreach ($options as $_key=>$_val)
 		{
-			$_html_result .= tpl_function_html_options_optoutput($tpl, $_key, $_val, $selected);      
+			$_html_result .= tpl_function_html_options_optoutput($tpl, $_key, $_val, $selected);
 		}
 	}
 	else

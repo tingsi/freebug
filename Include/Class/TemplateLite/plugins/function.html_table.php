@@ -15,7 +15,7 @@
  *           tr_attr = table row attributes (arrays are cycled)
  *           td_attr = table cell attributes (arrays are cycled)
  *           trailpad = value to pad trailing cells with
- * 
+ *
  * Examples: {table loop=$data}
  *           {$table loop=$data cols=4 tr_attr='"bgcolor=red"'}
  *           {$table loop=$data cols=4 tr_attr=$colors}

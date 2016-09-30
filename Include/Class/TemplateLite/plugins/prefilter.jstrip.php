@@ -22,7 +22,7 @@ function template_prefilter_jstrip($tpl_source, &$template_object)
 function template_prefilter_jstrip_one($code)
 {
 	return template_prefilter_jstrip_cb(array("", $code), false);
-} 
+}
 
 function template_prefilter_jstrip_cb($m, $literal=true)
 {
@@ -73,7 +73,7 @@ function template_prefilter_jstrip_cb($m, $literal=true)
 
 			if ($comment==0)
 			{
-				//start a string 
+				//start a string
 				if ($c[$i]=="'" OR $c[$i]=='"')
 				{
 					$string=$c[$i];
