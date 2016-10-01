@@ -45,14 +45,8 @@ $_CFG['LDAP']['Filter']   = "(&(objectClass=person)(uid={login}))";
 $_CFG['LDAP']['TTLS']   = false;
 */
 
-/* 5. Define validating table and it's fields. don't change them. */
-$_CFG['UserTable']['TableName']     = 'TestUser';
-$_CFG['UserTable']['UserName']      = 'UserName';
-$_CFG['UserTable']['RealName']      = 'RealName';
-$_CFG['UserTable']['UserPassword']  = 'UserPassword';
-$_CFG['UserTable']['Email']         = 'Email';
-$_CFG['UserTable']['NoticeFlag']    = 'NoticeFlag';
-$_CFG['UserTable']['EncryptType']   = 'md5';    // md5|text|mysqlpassword
+/* 5. . */
+$_CFG['EncryptType']   = 'md5';    // md5|text|mysqlpassword
 
 /* 6. Query Setting. */
 $_CFG['QueryFieldNumber'] = 4;      // The fields number to query in QueryBugForm.php

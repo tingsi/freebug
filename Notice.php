@@ -31,7 +31,7 @@ foreach($BugList as $BugInfo)
 }
 $UserNameList = @array_keys($BugGroupedList);
 $InUserNames = dbCreateIN(sysAddSlash(join(',',$UserNameList)));
-$UserList = testGetUserList("{$_CFG[UserTable][UserName]} {$InUserNames}");
+$UserList = testGetUserList("UserName {$InUserNames}");
 
 $CssStyle = join("",file($_CFG['RealRootPath'] . "/Css/Mail.css"));
 $TPL->assign("CssStyle",$CssStyle);

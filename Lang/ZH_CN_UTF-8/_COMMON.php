@@ -852,7 +852,6 @@ $_LANG["InstallErrorBugDB"]           = "BugFree 数据库验证失败: ";
 $_LANG["InstallErrorPrefixNeeded"]    = "为创建新表，需要在配置文件中指定数据表前缀。<br />例：\$_CFG['DB']['TablePrefix'] = 'bf_';";
 $_LANG["InstallErrorCreateBugDB"]     = "BugFree 数据库创建失败: ";
 $_LANG["InstallErrorUserDB"]          = "用户数据库验证失败: ";
-$_LANG["InstallErrorUserTable"]       = "用户验证表: ";
 $_LANG["InstallErrorWritable"]        = "必须可读可写可执行(o=rwx)";
 $_LANG["InstallErrorSmtpAuth"]        = "Smtp服务器需要验证，必须指定用户名和密码";
 $_LANG["InstallErrorAdminUserInfo"]   = "请指定管理员的用户名、Email、密码";

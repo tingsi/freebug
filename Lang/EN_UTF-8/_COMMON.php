@@ -850,7 +850,6 @@ $_LANG["InstallErrorBugDB"]           = "Verifying BugFree database failed:";
 $_LANG["InstallErrorPrefixNeeded"]    = "Database table prefix not found";
 $_LANG["InstallErrorCreateBugDB"]     = "Creating BugFree database failed: ";
 $_LANG["InstallErrorUserDB"]          = "Verifying user database failed:";
-$_LANG["InstallErrorUserTable"]       = " User managing table: ";
 $_LANG["InstallErrorWritable"]        = " Should be readable and writable (o=rwx) ";
 $_LANG["InstallErrorSmtpAuth"]        = " SMTP need user name and password ";
 $_LANG["InstallErrorAdminUserInfo"]   = " Please specify the username, email, password of the administrator ";

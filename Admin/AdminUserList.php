@@ -32,9 +32,9 @@ if(isset($_GET['SearchUser']))
 if($SSearchUser != '')
 {
     $SSearchUser = my_escape_string(my_escape_string($SSearchUser));
-    $Where .= " AND ( BINARY {$_CFG[UserTable][UserName]} like '%{$SSearchUser}%' ";
-    $Where .= " OR BINARY {$_CFG[UserTable][RealName]} like '%{$SSearchUser}%' ";
-    $Where .= " OR BINARY {$_CFG[UserTable][Email]} like '%{$SSearchUser}%' )";
+    $Where .= " AND ( BINARY UserName like '%{$SSearchUser}%' ";
+    $Where .= " OR BINARY RealNamelike '%{$SSearchUser}%' ";
+    $Where .= " OR BINARY Email like '%{$SSearchUser}%' )";
 }
 else
 {
@@ -42,9 +42,9 @@ else
     {
        $SSearchUser =  $_SESSION['SearchUser'];
        $SSearchUser = my_escape_string(my_escape_string($SSearchUser));
-       $Where .= " AND ( BINARY {$_CFG[UserTable][UserName]} like '%{$SSearchUser}%' ";
-       $Where .= " OR BINARY {$_CFG[UserTable][RealName]} like '%{$SSearchUser}%' ";
-       $Where .= " OR BINARY {$_CFG[UserTable][Email]} like '%{$SSearchUser}%' )";
+       $Where .= " AND ( BINARY UserName like '%{$SSearchUser}%' ";
+       $Where .= " OR BINARY RealName like '%{$SSearchUser}%' ";
+       $Where .= " OR BINARY Email like '%{$SSearchUser}%' )";
     }
 }
 
@@ -55,7 +55,7 @@ else
 }
 
 $OrderBy = "UserID DESC";
-$Pagination = new Page($_CFG['UserTable']['TableName'], '', '', '', $PageWhere, '?SearchUser='.sysAddSlash($_SESSION['SearchUser']), $$DBName);
+$Pagination = new Page('TestUser', '', '', '', $PageWhere, '?SearchUser='.sysAddSlash($_SESSION['SearchUser']), $$DBName);
 $LimitNum = $Pagination->LimitNum();
 
 /* Get user list */

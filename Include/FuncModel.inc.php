@@ -48,8 +48,8 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
 
  
     {
-        $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "'" . " AND IsDroped = '0'";
-        $DBTestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email, AuthMode",  $Where , $$DBName);
+        $Where = "UserName = '" . my_escape_string($TestUserName) . "'" . " AND IsDroped = '0'";
+        $DBTestUserInfo = dbGetRow('TestUser', "UserName, RealName, Email, AuthMode",  $Where , $$DBName);
         if(empty($DBTestUserInfo))
         {
              $TestUserInfo = array();
@@ -73,7 +73,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                     }
 
 #update email at login only, no need to update DiaplayName. 
-                    dbUpdateRow($_CFG['UserTable']['TableName']
+                    dbUpdateRow('TestUser'
 #                            , 'RealName', "'{$TestUserInfo[RealName]}'"
                             , 'UserPassword', "'{$TestUserPWD}'"
                             , 'Email', "'{$TestUserInfo[Email]}'"
@@ -89,9 +89,8 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                     $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
                 }
 
-                $Where = "{$_CFG[UserTable][UserName]} = '" . my_escape_string($TestUserName) . "' AND {$_CFG[UserTable][UserPassword]} = '{$TestUserPWD}'";
-                $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email"
-                        ,  $Where , $$DBName);
+                $Where = "UserName = '" . my_escape_string($TestUserName) . "' AND UserPassword = '{$TestUserPWD}'";
+                $TestUserInfo = dbGetRow('TestUser', "UserName, RealName, Email" ,  $Where , $$DBName);
             }
         }
     }
@@ -115,19 +114,19 @@ function baseEncryptUserPWD($TestUserPWD, $TestUserName = '')
 {
     global $_CFG;
 
-    if($_CFG['UserTable']['EncryptType'] == 'md5')
+    if($_CFG['EncryptType'] == 'md5')
     {
         $TestUserPWD = md5($TestUserPWD);
     }
-    elseif($_CFG['UserTable']['EncryptType'] == 'mysqlpassword')
+    elseif($_CFG['EncryptType'] == 'mysqlpassword')
     {
         $TestUserPWD = "PASSWORD('{$TestUserPWD}')";
     }
-    elseif($_CFG['UserTable']['EncryptType'] == 'discuzuc')
+    elseif($_CFG['EncryptType'] == 'discuzuc')
     {
         $DBName = 'MyDB';
         global $$DBName;
-        $TestUserInfo = dbGetRow($_CFG[UserTable][TableName], "{$_CFG[UserTable][UserName]} AS UserName,salt", "UserName = '{$TestUserName}'", $$DBName);
+        $TestUserInfo = dbGetRow('TestUser', "UserName,salt", "UserName = '{$TestUserName}'", $$DBName);
         $TestUserPWD= md5(md5($TestUserPWD).$TestUserInfo['salt']);
     }    
     else
@@ -572,7 +571,7 @@ function testGetUserList($Where = '', $OrderBy = 'UserName ASC', $Limit = '', $L
 
     global $_CFG;
 
-    $Columns = "{$_CFG[UserTable][UserName]} AS UserName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][RealName]} AS PreAppendName, {$_CFG[UserTable][UserPassword]} AS UserPassword, {$_CFG[UserTable][Email]} AS Email, {$_CFG[UserTable][NoticeFlag]} AS NoticeFlag";
+    $Columns = "UserName, RealName, RealName AS PreAppendName, UserPassword, Email, NoticeFlag";
     $Columns = 'UserID, ' . $Columns;
     if($Where != "")
     {
@@ -583,7 +582,7 @@ function testGetUserList($Where = '', $OrderBy = 'UserName ASC', $Limit = '', $L
         $Where = "IsDroped = '0'";
     }
 
-    $UserList = dbGetList($_CFG['UserTable']['TableName'], $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName, $ListKey);
+    $UserList = dbGetList('TestUser', $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName, $ListKey);
     $DuplicateRealName = array();
     foreach($UserList as $UserName => $UserInfo)
     {
@@ -646,9 +645,9 @@ function testGetAllUserList($Where = '', $OrderBy = '', $Limit = '')
     $DBName = 'MyDB';
     global $$DBName;
 
-    $Columns = "{$_CFG[UserTable][UserName]} AS UserName, CONCAT(UPPER(LEFT({$_CFG[UserTable][UserName]},1)),': ',{$_CFG[UserTable][RealName]}) AS PreAppendName, {$_CFG[UserTable][RealName]} AS RealName, {$_CFG[UserTable][Email]} AS Email";
+    $Columns = "UserName, CONCAT(UPPER(LEFT(UserName,1)),': ',RealName) AS PreAppendName, RealName, Email";
     $Columns = 'UserID, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode, ' . $Columns;
-    return dbGetList($_CFG['UserTable']['TableName'], $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName);
+    return dbGetList('TestUser', $Columns, $Where, '', $OrderBy, $Limit, 'UserName', $$DBName);
 }
 
 /**
@@ -661,7 +660,7 @@ function testGetAllUserList($Where = '', $OrderBy = '', $Limit = '')
 function testGetUserInfoByName($UserName)
 {
     global $_CFG;
-    $UserInfo = array_pop(testGetUserList("{$_CFG[UserTable][UserName]}='{$UserName}'"));
+    $UserInfo = array_pop(testGetUserList("UserName='{$UserName}'"));
     return $UserInfo;
 }
 
@@ -1681,7 +1680,7 @@ function testEditUser($PostUserInfo)
     $PostUserInfo['RealName'] = htmlspecialchars(trim($PostUserInfo['RealName']));
     $PostUserInfo['Email'] = trim($PostUserInfo['Email']);
 
-    $RawUserInfo = array_pop(dbGetList($_CFG['UserTable']['TableName'], $Columns, "UserName = '{$PostUserInfo[UserName]}'"));
+    $RawUserInfo = array_pop(dbGetList('TestUser', $Columns, "UserName = '{$PostUserInfo[UserName]}'"));
 
     if(empty($PostUserInfo['RealName']))
     {
@@ -1722,7 +1721,7 @@ function testEditUser($PostUserInfo)
     
     if($PostUserInfo['UserPassword'] == '')
     {
-        dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$PostUserInfo[RealName]}'"
+        dbUpdateRow('TestUser', 'RealName', "'{$PostUserInfo[RealName]}'"
                                                    , 'Email', "'{$PostUserInfo[Email]}'"
                                                    , 'NoticeFlag', "'{$PostUserInfo[NoticeFlag]}'"
                                                    , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'"
@@ -1732,7 +1731,7 @@ function testEditUser($PostUserInfo)
     else
     {
         $PostUserInfo['UserPassword'] = baseEncryptUserPWD($PostUserInfo['UserPassword']);
-        dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$PostUserInfo[RealName]}'"
+        dbUpdateRow('TestUser', 'RealName', "'{$PostUserInfo[RealName]}'"
                                                    , 'UserPassword', "'{$PostUserInfo[UserPassword]}'"
                                                    , 'Email', "'{$PostUserInfo[Email]}'"
                                                    , 'NoticeFlag', "'{$PostUserInfo[NoticeFlag]}'"
@@ -2727,13 +2726,13 @@ function xAdminAddUser($UserForm)
         xAssignActionMessage($objResponse, join('<br />', $ErrorMsg), 'Error');
     }
      /* check wether the user's exist */
-    elseif(dbGetRow($_CFG['UserTable']['TableName'], '', "UserName = '{$UserForm[UserName]}'"))
+    elseif(dbGetRow('TestUser', '', "UserName = '{$UserForm[UserName]}'"))
     {
         xAssignActionMessage($objResponse, $_LANG['UserExist'], 'Warning');
     }
     else
     {
-        $UserID = dbInsertRow($_CFG['UserTable']['TableName'], "'{$UserForm[UserName]}','{$UserForm[RealName]}','{$UserForm[UserPassword]}', '{$UserForm[Email]}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '0', '{$UserForm[AuthMode]}'"
+        $UserID = dbInsertRow('TestUser', "'{$UserForm[UserName]}','{$UserForm[RealName]}','{$UserForm[UserPassword]}', '{$UserForm[Email]}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '0', '{$UserForm[AuthMode]}'"
             , "UserName, RealName, UserPassword, Email, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode");
 
         if($UserForm['AuthMode'] == 'LDAP')
@@ -2787,14 +2786,14 @@ function xAdminEditUser($UserForm)
         xAssignActionMessage($objResponse, join('<br />', $ErrorMsg), 'Error');
     }
     /* check wether the user's exist */
-    elseif(dbGetRow($_CFG['UserTable']['TableName'], '', "UserName = '{$UserForm[UserName]}' AND UserID <> '{$UserForm[UserID]}'"))
+    elseif(dbGetRow('TestUser', '', "UserName = '{$UserForm[UserName]}' AND UserID <> '{$UserForm[UserID]}'"))
     {
         xAssignActionMessage($objResponse, $_LANG['UserExist'], 'Warning');
     }
     /* add user */
     else
     {
-        $UserInfo = dbGetRow($_CFG['UserTable']['TableName'], '', "UserID = '{$UserForm[UserID]}'");
+        $UserInfo = dbGetRow('TestUser', '', "UserID = '{$UserForm[UserID]}'");
         $DiffArray = sysArrayDiffAssoc($UserInfo, $UserForm, 'UserID,RealName,Email');
  
         if(empty($DiffArray) && $UserForm['UserPassword'] == '')
@@ -2811,7 +2810,7 @@ function xAdminEditUser($UserForm)
             {
                 $UserForm['UserPassword'] = baseEncryptUserPWD($UserForm['UserPassword']);
             }
-           dbUpdateRow($_CFG['UserTable']['TableName'], 'RealName', "'{$UserForm[RealName]}'"
+           dbUpdateRow('TestUser', 'RealName', "'{$UserForm[RealName]}'"
                                                        , 'UserPassword', "'{$UserForm[UserPassword]}'"
                                                        , 'Email', "'{$UserForm[Email]}'"
                                                        , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) ."'"
@@ -2856,7 +2855,7 @@ function xAdminAddGroup($GroupForm)
         $GroupACL = NULL;
         if($GroupUser != '')
         {
-            $GroupUserList = testGetUserList($_CFG['UserTable']['UserName'] . dbCreateIN($GroupUser));
+            $GroupUserList = testGetUserList('UserName' . dbCreateIN($GroupUser));
             uasort($GroupUserList, 'testCmpPreAppendName');
             $GroupUser = join(',',array_keys($GroupUserList));
 
@@ -2867,7 +2866,7 @@ function xAdminAddGroup($GroupForm)
         $GroupManager = my_escape_string($GroupForm['GroupManagerNames']);
         if($GroupManager != '')
         {
-            $GroupManagerList = testGetUserList($_CFG['UserTable']['UserName'] . dbCreateIN($GroupManager));
+            $GroupManagerList = testGetUserList('UserName' . dbCreateIN($GroupManager));
             uasort($GroupManagerList, 'testCmpPreAppendName');
             $GroupManager = join(',',array_keys($GroupManagerList));
 
@@ -2916,7 +2915,7 @@ function xAdminEditGroup($GroupForm)
         $GroupACL = NULL;
         if($GroupUser != '')
         {
-            $GroupUserList = testGetUserList($_CFG['UserTable']['UserName'] .  dbCreateIN($GroupUser));
+            $GroupUserList = testGetUserList('UserName' .  dbCreateIN($GroupUser));
             uasort($GroupUserList, 'testCmpPreAppendName');
             $GroupUser = my_escape_string(join(',',array_keys($GroupUserList)));
 
@@ -2926,7 +2925,7 @@ function xAdminEditGroup($GroupForm)
         $GroupManager = my_escape_string($GroupForm['GroupManagerNames']);
         if($GroupManager != '')
         {
-            $GroupManagerList = testGetUserList($_CFG['UserTable']['UserName'] . dbCreateIN($GroupManager));
+            $GroupManagerList = testGetUserList('UserName' . dbCreateIN($GroupManager));
             uasort($GroupManagerList, 'testCmpPreAppendName');
             $GroupManager = my_escape_string(join(',',array_keys($GroupManagerList)));
 
