@@ -23,8 +23,9 @@ if (true){
         $u = $ldap->getUser('zhao.wei');
         $us = $ldap->listUsers();
 
-        //error_log(print_r($u, true));
-        error_log(print_r($us, true));
+        $g = $ldap->getGroup('svn');
+        $gs = $ldap->listGroups();
+        error_log(print_r($gs, true));
 
 }
 
