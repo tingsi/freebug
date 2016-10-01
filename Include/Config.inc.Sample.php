@@ -35,13 +35,9 @@ $_CFG['DBCharset']         = 'UTF8';
  */
 /*
 $_CFG['LDAP']['Url']    = 'ldap://cc.top4s.net';
-$_CFG['LDAP']['Binddn']   =   'cn=admin,dc=xiaokebang,dc=com';
+$_CFG['LDAP']['BindDn']   =   'cn=admin,dc=xiaokebang,dc=com';
 $_CFG['LDAP']['BindPw']   =   '';
 $_CFG['LDAP']['Base']   = 'dc=xiaokebang,dc=com';
-$_CFG['LDAP']['Login']   = 'uid';
-$_CFG['LDAP']['Email']   = 'mail';
-$_CFG['LDAP']['UserName']   = 'cn';
-$_CFG['LDAP']['Filter']   = "(&(objectClass=person)(uid={login}))";
 $_CFG['LDAP']['TTLS']   = false;
 */
 

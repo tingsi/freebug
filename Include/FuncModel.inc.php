@@ -6,7 +6,27 @@
 
 
 require_once("FuncLdap.inc.php");
-#ldapListUser();
+require_once("ldap.class.php");
+if (true){
+
+        $url = $_CFG['LDAP']['Url'];
+        $tls = $_CFG['LDAP']['TTLS'];
+        $binddn = $_CFG['LDAP']['BindDn'];
+        $bindpw = $_CFG['LDAP']['BindPw'];
+
+        $base = $_CFG['LDAP']['Base'];
+        $userdn = "ou=peoples,$base";
+        $groupdn = "ou=groups,$base";
+
+        $ldap = new PowerLDAP($url, $tls, $binddn, $bindpw, $userdn, $groupdn);
+
+        $u = $ldap->getUser('zhao.wei');
+        $us = $ldap->listUsers();
+
+        //error_log(print_r($u, true));
+        error_log(print_r($us, true));
+
+}
 
 //------------------------- BASE FUNCTIONS -----------------------------------//
 /**
@@ -58,7 +78,12 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
         {
             if($DBTestUserInfo['AuthMode'] == 'LDAP')
             {
-                $TestUserInfo = ldapLogin($TestUserName,$TestUserPWD);
+                $url = $_CFG['LDAP']['Url'];
+                $tls = $_CFG['LDAP']['TTLS'];
+                $base = $_CFG['LDAP']['Base'];
+                $path = "uid=$login,ou=peoples,$base"; 
+
+                $TestUserInfo = ldapLogin($url, $tls, $path, $TestUserName,$TestUserPWD);
                 if($TestUserInfo)
                 {
                     $TestUserPWD = baseEncryptUserPWD($TestUserPWD, $TestUserName);
@@ -2685,7 +2710,19 @@ function xAdminAddUser($UserForm)
 
     if($UserForm['AuthMode'] == 'LDAP')
     {
-        $TestUserInfo = ldapSearchUser($UserForm['UserName']);
+
+        $url = $_CFG['LDAP']['Url'];
+        $tls = $_CFG['LDAP']['TTLS'];
+        $binddn = $_CFG['LDAP']['BindDn'];
+        $bindpw = $_CFG['LDAP']['BindPw'];
+
+        $base = $_CFG['LDAP']['Base'];
+        $userdn = "ou=peoples,$base";
+        $groupdn = "ou=groups,$base";
+
+
+        $ldap = new PowerLDAP($url, $tls, $binddn, $bindpw, $userdn, $groupdn);
+        $TestUserInfo = $ldap->getUser($UserForm['UserName']);
         if(empty($TestUserInfo))
         {
             $ErrorMsg[] = $_LANG['LDAPUserNotFound'];
