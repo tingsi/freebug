@@ -2,7 +2,9 @@
 <body class="AdminBody">
 {include file="Admin/AdminTopNav.tpl"}
   <div class="AdminAction">
-  {$PaginationHtml}<a href="AdminUser.php?ActionType=AddUser" class="BigButton">{$Lang.AddUser}</a>
+  {$PaginationHtml}
+  <a href="AdminUser.php?ActionType=AddUser" class="BigButton">{$Lang.AddUser}</a>
+  <a href="AdminUser.php?ActionType=SyncUser" class="BigButton">{$Lang.SyncUser}</a>
     <form class="AdminSearch" name="SearchUserForm" method="get">
     <input type="text" id="SearchUser" name="SearchUser" value="{$SearchUser}" />
     &nbsp;

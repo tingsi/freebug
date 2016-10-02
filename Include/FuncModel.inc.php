@@ -7,7 +7,7 @@
 
 require_once("FuncLdap.inc.php");
 require_once("ldap.class.php");
-if (true){
+if (false){
 
         $url = $_CFG['LDAP']['Url'];
         $tls = $_CFG['LDAP']['TTLS'];

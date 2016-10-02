@@ -14,11 +14,8 @@ baseJudgeAdminUserLogin();
 sysXajaxRegister("xAdminAddUser,xAdminEditUser");
 
 $ActionType = $_GET['ActionType'];
-if($ActionType != 'EditUser')
-{
-    $ActionType = 'AddUser';
-}
-else
+
+if($ActionType == 'EditUser')
 {
     $UserInfo = dbGetRow('TestUser', '', "UserID = '{$_GET[UserID]}'");
     $GroupACL = dbGetList('TestGroup', '', "GroupUser LIKE '%," . my_escape_string(my_escape_string($UserInfo['UserName'])) . ",%'");
@@ -70,6 +67,68 @@ else
         exit;
     }
 }
+else if($ActionType == 'SyncUser'){
+
+        $url = $_CFG['LDAP']['Url'];
+        $tls = $_CFG['LDAP']['TTLS'];
+        $binddn = $_CFG['LDAP']['BindDn'];
+        $bindpw = $_CFG['LDAP']['BindPw'];
+
+        $base = $_CFG['LDAP']['Base'];
+        $userdn = "ou=peoples,$base";
+        $groupdn = "ou=groups,$base";
+
+        $ldap = new PowerLDAP($url, $tls, $binddn, $bindpw, $userdn, $groupdn);
+
+        $Users = $ldap->listUsers();
+        $Groups  = $ldap->listGroups();
+        $newUsers = Array();
+        $oldUsers = Array();
+        foreach ($Users as $user){
+            $uid= $user['UserName'];
+            $email = $user['Email'];
+            $nick = $user['RealName'];
+
+            $u = dbGetRow('TestUser', '', "UserName= '{$uid}'");
+            if ($u) {
+                //update
+                dbUpdateRow('TestUser', 'Email', "'{$email}'",  'RealName', "'$nick'", "UserName= '{$uid}'");                   
+                $oldUsers []= $u;
+            }
+            else {
+                dbInsertRow('TestUser', "'{$uid}','{$nick}','123456', '{$email}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '0', 'LDAP'"
+            , "UserName, RealName, UserPassword, Email, AddedBy, AddDate, LastEditedBy, LastDate, IsDroped, AuthMode");
+                $newUsers []= Array('UserName'=>$uid, 'Email'=>$email, 'RealName'=>$nick);
+            }
+        }
+        $newGroups = Array();
+        $oldGroups = Array();
+        foreach ($Groups as $group){
+            $gid = $group['GroupName'];
+            $ms  = $group['members'];
+            if ($ms) {
+                $ms = implode(',', $ms);
+                $g = dbGetRow('TestGroup', '', "GroupName= '{$gid}'");
+                if ($g){
+                    dbUpdateRow('TestGroup', 'GroupUser', "'{$ms}'" , 'LastEditedBy', "'" . my_escape_string($_SESSION['TestUserName']) . "'", 'LastDate', 'now()'
+                            , "GroupName ='{$gid}'");
+                    $oldGroups []= Array('gn'=>$gid, 'ms' => $ms);
+                }else{
+                    dbInsertRow('TestGroup', "'{$gid}','','{$ms}', '" . my_escape_string($_SESSION['TestUserName']) . "', now(), '" . my_escape_string($_SESSION['TestUserName']) . "', now()"
+                                              , "GroupName, GroupManagers, GroupUser, AddedBy, AddDate, LastEditedBy, LastDate");
+                    $newGroups []= Array('gn'=>$gid, 'ms' => $ms);
+
+                }
+            }
+        }
+        $TPL->assign('newUsers', $newUsers);
+        $TPL->assign('oldUsers', $oldUsers);
+        $TPL->assign('newGroups', $newGroups);
+        $TPL->assign('oldGroups', $oldGroups);
+
+}
+
+$tpl =  ( $ActionType == 'AddUser' ) ? 'Admin/User.tpl' : 'Admin/Sync.tpl';
 
 /* Create select html code */
 $GroupList = testGetGroupList('GroupID <> 1');
@@ -80,5 +139,4 @@ $TPL->assign('UserInfo', $UserInfo);
 /* Display the template file. */
 $TPL->assign('NavActiveUser', ' class="Active"');
 $TPL->assign('ActionType', $ActionType);
-$TPL->display('Admin/User.tpl');
-?>
+$TPL->display($tpl);
