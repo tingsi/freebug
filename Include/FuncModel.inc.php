@@ -82,7 +82,7 @@ function baseJudgeUser($TestUserName = '',$TestUserPWD = '', $Encrypt = true)
                 $url = $_CFG['LDAP']['Url'];
                 $tls = $_CFG['LDAP']['TTLS'];
                 $base = $_CFG['LDAP']['Base'];
-                $path = "uid=$login,ou=peoples,$base"; 
+                $path = "uid=$TestUserName,ou=peoples,$base"; 
 
                 $TestUserInfo = ldapLogin($url, $tls, $path, $TestUserName,$TestUserPWD);
                 if($TestUserInfo)
