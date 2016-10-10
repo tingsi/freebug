@@ -137,7 +137,7 @@ $_LANG['BugQueryField'] = array
    'AssignedTo'     => $_LANG['BugFields']['AssignedTo'],
    'MailTo'         => $_LANG['BugFields']['MailTo'],
    'BugSeverity'    => $_LANG['BugFields']['BugSeverity'],
-   'BugPriority'    => $_LANG['BugFields']['BugPriority'],
+//   'BugPriority'    => $_LANG['BugFields']['BugPriority'],
    'BugType'        => $_LANG['BugFields']['BugType'],
    'HowFound'       => $_LANG['BugFields']['HowFound'],
    'BugOS'          => $_LANG['BugFields']['BugOS'],
@@ -167,7 +167,7 @@ $_LANG["DefaultBugQueryFields"] = array
 (
    "BugID"        => $_LANG["BugFields"]["BugID"],
    "BugSeverity"  => $_LANG["BugFields"]["BugSeverity"],
-   "BugPriority"  => $_LANG["BugFields"]["BugPriority"],
+//   "BugPriority"  => $_LANG["BugFields"]["BugPriority"],
    "BugTitle"     => $_LANG["BugFields"]["BugTitle"],
    "OpenedBy"     => $_LANG["BugFields"]["OpenedBy"],
    "AssignedTo"   => $_LANG["BugFields"]["AssignedTo"],
