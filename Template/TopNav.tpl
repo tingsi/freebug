@@ -7,7 +7,7 @@
     <div id="TopNavAbout">
       <span>{$Lang.Welcome},</span>
       <span id="UserName">{$TestRealName}</span>
-      <a id="EditMyInfo" href="EditMyInfo.php" target="_blank">{$Lang.EditPer}</a>{if $TestIsAdmin || $TestIsProjectAdmin}
+      {if $TestIsAdmin || $TestIsProjectAdmin}
       <a href="Admin/" target="_blank">{$Lang.Admin}</a>{/if}
       <a href="Logout.php?Logout=Yes">{$Lang.Logout}</a>
     </div>
