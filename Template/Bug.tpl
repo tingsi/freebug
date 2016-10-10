@@ -120,7 +120,7 @@
                       {/if}
                   </dd>
                 </dl>
-                <dl style="line-height:17pt">
+                <dl style="line-height:17pt;display:none">
                   <dt>{$Lang.BugFields.BugPriority}</dt>
                   <dd>
                                {if $ActionType eq 'OpenBug' or $EditMode eq 'true'}
@@ -150,7 +150,7 @@
                                 {/if}
                   </dd>
                 </dl>
-                <dl style="line-height:17pt">
+                <dl style="line-height:17pt;display:none">
                   <dt>{$Lang.BugFields.BugOS}</dt>
                   <dd>
                                {if $ActionType eq 'OpenBug' or $EditMode eq 'true'}
@@ -277,6 +277,8 @@
                     </dd>
                   </dl>
                 </fieldset>
+                </td>
+                <td style="width: 30%" valign="top">
                 <fieldset class="Normal FloatLeft"  style="width: 95%">
                   <legend>{$Lang.BugClosedInfo}</legend>
                   <dl>
@@ -301,30 +303,8 @@
                     </dd>
                   </dl>
                 </fieldset>
-                </td>
-                <td style="width: 30%" valign="top">
                 <fieldset class="Normal FloatLeft" style="width: 94%">
-                  <legend>{$Lang.BugOtherInfo}</legend>
-                   <dl style="line-height:17pt">
-                    <dt>{$Lang.BugFields.BugSubStatus}</dt>
-                    <dd>
-                       {if $ActionType eq 'OpenBug' or $EditMode eq 'true'}
-                          {$BugSubStatusList}      
-                       {else}
-                          {$BugInfo.BugSubStatusName}
-                       {/if}
-                    </dd>
-                  </dl>
-                  <dl style="line-height:17pt">
-                    <dt>{$Lang.BugFields.BugMachine}</dt>
-                    <dd>
-                               {if $ActionType eq 'OpenBug' or $EditMode eq 'true'}
-                            <input type="text" name="BugMachine" id="BugMachine" size="20" class="MyInput"  maxlength="80" value="{$BugInfo.BugMachine}" />
-                        {else}
-                            <input type="text" name="BugMachine" id="BugMachine" size="20" readonly=true class="MyInput ReadOnlyField"  maxlength="80" value="{$BugInfo.BugMachine}" />
-                        {/if}
-                    </dd>
-                  </dl>
+                  <legend>{$Lang.BugConditionInfo}</legend>
                   <dl style="line-height:17pt">
                     <dt>{$Lang.BugFields.BugKeyword}</dt>
                     <dd>
@@ -335,9 +315,6 @@
                         {/if}
                     </dd>
                   </dl>
-                </fieldset>
-                <fieldset class="Normal FloatLeft" style="width: 94%">
-                  <legend>{$Lang.BugConditionInfo}</legend>
                   <dl style="line-height:17pt">
                     <dt>{$Lang.BugFields.LinkID}</dt>
                     <dd>
@@ -348,25 +325,6 @@
                            <a href="Bug.php?BugID={$LinkID}" target="_blank">{$LinkID}</a>
                          {/foreach}
                        {/if}
-                    </dd>
-                  </dl>
-                  <dl style="line-height:17pt">
-                    <dt>{$Lang.BugFields.CaseID}</dt>
-                    <dd>
-                       {if $ActionType eq 'OpenBug' or $EditMode eq 'true'}
-                         <input type="text" name="CaseID" id="CaseID" size="20" class="MyInput" maxlength="80" value="{$BugInfo.CaseID}" />
-                       {else}
-                         {foreach from=$BugInfo.CaseIDList item="CaseID"}
-                           <a href="Case.php?CaseID={$CaseID}" target="_blank">{$CaseID}</a>
-                         {/foreach}
-                       {/if}
-                    </dd>
-                  </dl>
-                  <dl style="line-height:17pt">
-                    <dt>{$Lang.BugFields.ResultID}</dt>
-                    <dd>
-                      <a href="Result.php?ResultID={$BugInfo.ResultID}" target="_blank">{$BugInfo.ResultID}</a>
-                      <input type="hidden" name="ResultID" value="{$BugInfo.ResultID}" />
                     </dd>
                   </dl>
                 </fieldset>
