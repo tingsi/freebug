@@ -125,7 +125,7 @@ if(typeof(xajax) != "undefined")
         xajax.doneLoadingFunction = hideLoadingMessage;
     }
 }
-setInterval("xajax_xUpdateUserControl('{/literal}{$TestMode}{literal}')",300000);
+//setInterval("xajax_xUpdateUserControl('{/literal}{$TestMode}{literal}')",300000);
 //]]
 </script>
 {/literal}
