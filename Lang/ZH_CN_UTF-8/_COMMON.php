@@ -476,8 +476,7 @@ $_LANG['OpenCase'] = '新建 Case';
 /* Define the language about admin management */
 $_LANG['ManageProject']    = '项目管理';
 $_LANG['ManageModule']     = '模块管理';
-$_LANG['ManageBugModule']  = 'Bug 模块';
-$_LANG['ManageCaseModule'] = 'Case 模块';
+$_LANG['ManageBugModule']  = '模块管理';
 $_LANG['ManageUser']       = '用户管理';
 $_LANG['ManageGroup']      = '用户组管理';
 $_LANG['UserLog']          = '用户日志';
@@ -693,72 +692,6 @@ $_LANG['BugHistoryInfo']    = '历史';
 $_LANG['BugReproInfo']      = '复现步骤';
 $_LANG['BugFiles']          = '附件';
 $_LANG['MoreInfo']          = '更多信息';
-
-/*=====================================Setting for add, edit case====================*/
-$_LANG['AddCase']           = '新建 Case';
-$_LANG['NoCaseTitle']       = 'Case 标题不能为空';
-$_LANG['NoCaseStep']        = 'Case 步骤不能为空';
-$_LANG['NoCasePriority']    = 'Case 优先级不能为空';
-$_LANG['NoCaseType']        = 'Case 类型不能为空';
-$_LANG['NoCaseMethod']      = 'Case 测试方法不能为空';
-$_LANG['NoDisplayOrder']    = 'Case 显示顺序不能为空';
-$_LANG['IllegalDisplayOrder']    = 'Case 显示顺序必须为0-255之间的整数';
-$_LANG['BadScriptedDate']   = '日期不合法或日期格式无效（例如：2008-08-08）';
-$_LANG['CaseAlreadyChanged']= '该 Case 已经发生变更，请重新打开编辑。';
-
-$_LANG['CaseStatusInfo']    = 'Case 状态';
-
-$_LANG['CaseOpenedInfo']    = '新建';
-$_LANG['CaseReviewInfo']    = '评审';
-
-$_LANG['AddCaseButton']     = '新建 Case(N)';
-$_LANG['EditCaseButton']    = '编辑(E)';
-$_LANG['CopyCaseButton']    = '复制(C)';
-$_LANG['RunCaseButton']     = '运行(R)';
-$_LANG['RunCaseLink']       = '运行 Case';
-
-$_LANG['CaseFiles']         = '附件';
-$_LANG['CaseMainInfo']      = '主要信息';
-$_LANG['CaseActionInfo']    = '操作信息';
-$_LANG['CaseStepsInfo']     = '步骤';
-$_LANG['CaseConditionInfo'] = 'Case 相关';
-$_LANG['CaseOtherInfo']     = '其他信息';
-$_LANG['CaseDefaultStepInfo'] = <<<EOT
-[步骤]
-1.
-2.
-
-[验证]
-
-[备注]
-
-EOT;
-
-$_LANG['CaseAutomationInfo'] = '自动化脚本';
-/*=====================================Setting for add, edit result====================*/
-$_LANG['OpenResult']         = '新建 Result';
-$_LANG['RunCaseStep']        = '运行 Case';
-$_LANG['EditResult']         = '编辑 Result';
-$_LANG['EditResultButton']   = '编辑(E)';
-$_LANG['OpenBugButton']      = '新建 Bug(B)';
-$_LANG['ResultActionInfo']   = '操作信息';
-$_LANG['ResultFiles']        = '附件';
-
-$_LANG['NoResultValue']      = '没有选择执行结果';
-$_LANG['NoResultSteps']      = '没有任何 Result 步骤';
-$_LANG['NoResultBuild']      = '没有输入 Result 的运行 Build 版本';
-$_LANG['ResultAlreadyChanged'] = '该 Result 已经发生变更，请重新打开编辑。';
-$_LANG['ResultStatusInfo']   = 'Result 状态';
-$_LANG['ResultEnvInfo']      = '运行环境';
-$_LANG['ResultOpenedInfo']   = '新建';
-$_LANG['ResultMainInfo']     = '主要信息';
-$_LANG['ResultActionInfo']   = '操作信息';
-$_LANG['ResultStepsInfo']    = '步骤';
-$_LANG['ResultConditionInfo'] = 'Result 相关';
-$_LANG['ResultOtherInfo']    = '其他信息';
-
-
-$_LANG['NotSaveMod'] = '如果您离开本页面，您所做的更改将会丢失。';
 
 /*=====================================Setting for pagination===========================*/
 $_LANG['Pagination']['FirstPage']   = '首页';

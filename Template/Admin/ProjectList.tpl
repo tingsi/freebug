@@ -40,9 +40,8 @@
         {$Lang.ActiveProject}{/if}
         </a>{/if}
       </td>
-      <td>|
-        <a href="AdminModuleList.php?ProjectID={$Project.ProjectID}&ModuleType=Bug">{$Lang.ManageBugModule}</a>|
-        <a href="AdminModuleList.php?ProjectID={$Project.ProjectID}&ModuleType=Case">{$Lang.ManageCaseModule}</a>
+      <td>
+        <a href="AdminModuleList.php?ProjectID={$Project.ProjectID}&ModuleType=Bug">{$Lang.ManageBugModule}</a>
 	  </td>
       <td>{$Project.LastEditedByName}</td>
       <td>{$Project.LastDate}</td>

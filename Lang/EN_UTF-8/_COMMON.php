@@ -339,121 +339,6 @@ $_LANG['CaseFields'] = array
   'MarkForDeletion'   => 'Mark For Deletion',
 );
 
-/* The fields used to query in QueryCase.php.(Note: the field will be displayed in the order you defined here). */
-$_LANG['CaseQueryField'] = array
-(
-   'CaseID'          => $_LANG['CaseFields']['CaseID'],
-   'CaseTitle'       => $_LANG['CaseFields']['CaseTitle'],
-   'ProjectName'     => $_LANG['CaseFields']['ProjectName'],
-   'ModulePath'      => $_LANG['CaseFields']['ModulePath'],
-   'CaseStatus'      => $_LANG['CaseFields']['CaseStatus'],
-   'AssignedTo'      => $_LANG['CaseFields']['AssignedTo'],
-   'MailTo'          => $_LANG['CaseFields']['MailTo'],
-   'CasePriority'    => $_LANG['CaseFields']['CasePriority'],
-   'CaseType'        => $_LANG['CaseFields']['CaseType'],
-   'CaseMethod'      => $_LANG['CaseFields']['CaseMethod'],
-   'CasePlan'        => $_LANG['CaseFields']['CasePlan'],
-   'LastEditedBy'    => $_LANG['CaseFields']['LastEditedBy'],
-   'LastEditedDate'  => $_LANG['CaseFields']['LastEditedDate'],
-   'OpenedBy'        => $_LANG['CaseFields']['OpenedBy'],
-   'OpenedDate'      => $_LANG['CaseFields']['OpenedDate'],
-   'ScriptStatus'    => $_LANG['CaseFields']['ScriptStatus'],
-   'ScriptedBy'      => $_LANG['CaseFields']['ScriptedBy'],
-   'ScriptedDate'    => $_LANG['CaseFields']['ScriptedDate'],
-   'ScriptLocation'  => $_LANG['CaseFields']['ScriptLocation'],
-   'MarkForDeletion' => $_LANG['CaseFields']['MarkForDeletion'],
-   'CaseKeyword'     => $_LANG['CaseFields']['CaseKeyword'],
-   'BugID'           => $_LANG['CaseFields']['BugID'],
-   'LinkID'          => $_LANG['CaseFields']['LinkID'],
-   'ResultID'        => $_LANG['CaseFields']['ResultID'],
-   'DisplayOrder'    => $_LANG['CaseFields']['DisplayOrder'],
-   'ModifiedBy'      => $_LANG['CaseFields']['ModifiedBy'],
-);
-
-
-$_LANG['DefaultCaseQueryFields'] = array
-(
-   'CaseID'          => $_LANG['CaseFields']['CaseID'],
-   'CasePriority'    => $_LANG['CaseFields']['CasePriority'],
-   'CaseTitle'       => $_LANG['CaseFields']['CaseTitle'],
-   'CaseStatus'      => $_LANG['CaseFields']['CaseStatus'],
-   'OpenedBy'        => $_LANG['CaseFields']['OpenedBy'],
-   'AssignedTo'      => $_LANG['CaseFields']['AssignedTo'],
-   'LastEditedDate'  => $_LANG['CaseFields']['LastEditedDate'],
-   'DisplayOrder'    => $_LANG['CaseFields']['DisplayOrder'],
-);
-
-
-/* Define the CasePriority */
-$_LANG['CaseStatuses'] = array
-(
- 'Active'      => 'Active',
- 'Blocked'     => 'Blocked',
- 'Investigate' => 'Investigating',
- 'Reviewed'    => 'Reviewed',
-);
-
-$_LANG['CasePriorities'] = array
-(
- ''=>'',
- '1'=>'1',
- '2'=>'2',
- '3'=>'3',
- '4'=>'4',
-);
-
-$_LANG['CaseTypes'] = array
-(
- ''              => '',
- 'Functional'    => 'Function',
- 'Configuration' => 'Configuration',
- 'Setup'         => 'Setup',
- 'Security'      => 'Security',
- 'Performance'   => 'Performance',
- 'Other'         => 'Others',
-);
-
-$_LANG['CaseMethods'] = array
-(
- ''           => '',
- 'Manual'     => 'Manual',
- 'Automation' => 'Automation'
-);
-
-$_LANG['CasePlans'] = array
-(
- ''           => '',
- 'Function'   => 'Functional Test',
- 'UnitTest'   => 'Unit Test',
- 'BVT'        => 'BVT',
- 'Intergrate' => 'Intergration Test',
- 'System'     => 'System Test',
- 'Smoke'      => 'Smoke Test',
- 'Acceptance' => 'Acceptance Test',
-);
-
-$_LANG['ScriptStatuses'] = array
-(
- ''              => '',
- 'NotPlanned'    => 'Not Planned',
- 'Planning'      => 'Planning',
- 'Blocked'       => 'Blocked',
- 'Coding'        => 'Coding',
- 'CodingDone'    => 'Coding Done',
- 'Reviewed'      => 'Reviewed',
-);
-
-
-$_LANG['MarkForDeletions'] = array
-(
- '0' => 'No',
- '1' => 'Yes'
-);
-
-$_LANG['ResultOS']      = $_LANG['BugOS'];
-$_LANG['ResultBrowser'] = $_LANG['BugBrowser'];
-$_LANG['ResultMachine'] = $_LANG['BugMachine'];
-
 
 /* nomal value. */
 $_LANG['Confirm'] = 'Confirm';
@@ -468,14 +353,10 @@ $_LANG['AddedBy']  = 'Added By';
 $_LANG['LastTime'] = 'Last Modified Time';
 $_LANG['LastModifiedBy'] = 'Modified By';
 
-/* Define the Case Action  */
-$_LANG['OpenCase'] = 'New Case';
-
 /* Define the language about admin management */
 $_LANG['ManageProject']    = 'Project Management';
 $_LANG['ManageModule']     = 'Module Management';
-$_LANG['ManageBugModule']  = 'Bug Modules';
-$_LANG['ManageCaseModule'] = 'Case Modules';
+$_LANG['ManageBugModule']  = 'Modules Management';
 $_LANG['ManageUser']       = 'User Management';
 $_LANG['ManageGroup']      = 'Group Management';
 $_LANG['UserLog']          = 'User Log';
@@ -691,72 +572,6 @@ $_LANG['BugHistoryInfo']    = 'History';
 $_LANG['BugReproInfo']      = 'Repro Steps';
 $_LANG['BugFiles']          = 'Attachments';
 $_LANG['MoreInfo']          = 'More Info';
-
-/*=====================================Setting for add, edit case====================*/
-$_LANG['AddCase']           = 'New Case';
-$_LANG['NoCaseTitle']       = 'Case Title cannot be empty';
-$_LANG['NoCaseStep']        = 'Case Steps cannot be empty';
-$_LANG['NoCasePriority']    = 'Case Priority cannot be empty';
-$_LANG['NoCaseType']        = 'Case Type cannot be empty';
-$_LANG['NoCaseMethod']      = 'Case Method cannot be empty';
-$_LANG['NoDisplayOrder']    = 'Case display order cannot be empty';
-$_LANG['IllegalDisplayOrder']    = 'Case display order must be an integer between 0 and 255';
-$_LANG['BadScriptedDate']   = 'Invalid date or date format. For exmple 2008-08-08';
-$_LANG['CaseAlreadyChanged']= 'The case has already been modified, please reopen and edit again.';
-
-$_LANG['CaseStatusInfo']    = 'Case Status';
-
-$_LANG['CaseOpenedInfo']    = 'New';
-$_LANG['CaseReviewInfo']    = 'Review';
-
-$_LANG['AddCaseButton']     = 'New Case';
-$_LANG['EditCaseButton']    = 'Edit';
-$_LANG['CopyCaseButton']    = 'Copy';
-$_LANG['RunCaseButton']     = 'Run';
-$_LANG['RunCaseLink']       = 'Run Case';
-
-$_LANG['CaseFiles']         = 'Attachment';
-$_LANG['CaseMainInfo']      = 'Main Info';
-$_LANG['CaseActionInfo']    = 'Action Info';
-$_LANG['CaseStepsInfo']     = 'Steps';
-$_LANG['CaseConditionInfo'] = 'Case Related';
-$_LANG['CaseOtherInfo']     = 'Other Info';
-$_LANG['CaseDefaultStepInfo'] = <<<EOT
-[Steps]
-1.
-2.
-
-[Verify]
-
-[Note]
-
-EOT;
-
-$_LANG['CaseAutomationInfo'] = 'Automation Script';
-/*=====================================Setting for add, edit result====================*/
-$_LANG['OpenResult']         = 'New Result';
-$_LANG['RunCaseStep']        = 'Run Case';
-$_LANG['EditResult']         = 'Edit Result';
-$_LANG['EditResultButton']   = 'Edit';
-$_LANG['OpenBugButton']      = 'New Bug';
-$_LANG['ResultActionInfo']   = 'Action Info';
-$_LANG['ResultFiles']        = 'Attachments';
-
-$_LANG['NoResultValue']      = 'Result Value cannot be empty';
-$_LANG['NoResultSteps']      = 'Result Steps cannot be empty';
-$_LANG['NoResultBuild']      = 'Result Build cannot be empty';
-$_LANG['ResultAlreadyChanged'] = 'The result has already been modified, please reopen and edit again.';
-$_LANG['ResultStatusInfo']   = 'Result Status';
-$_LANG['ResultEnvInfo']      = 'Environment';
-$_LANG['ResultOpenedInfo']   = 'New';
-$_LANG['ResultMainInfo']     = 'Majar Info';
-$_LANG['ResultActionInfo']   = 'Action Info';
-$_LANG['ResultStepsInfo']    = 'Steps';
-$_LANG['ResultConditionInfo'] = 'Result Related';
-$_LANG['ResultOtherInfo']    = 'Other Info';
-
-
-$_LANG['NotSaveMod'] = 'If you leave this page, all changes will be lost.';
 
 /*=====================================Setting for pagination===========================*/
 $_LANG['Pagination']['FirstPage']   = 'First Page';
