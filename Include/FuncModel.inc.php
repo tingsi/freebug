@@ -1568,11 +1568,11 @@ function testEditBug($PostBugInfo, $UploadFile = false)
             $BugStatus = 'Active';
             $ActionType = 'Activated';
             $ResolvedBy = '';
-            $ResolvedDate = '0000-00-00 00:00:00';
+            $ResolvedDate = '';
             $ResolvedBuild = '';
             $Resolution = '';
             $ClosedBy = '';
-            $ClosedDate = '0000-00-00 00:00:00';
+            $ClosedDate = '';
         }
     }
 
@@ -1608,6 +1608,7 @@ function testEditBug($PostBugInfo, $UploadFile = false)
 
     $LastEditedBy = $PostBugInfo['TestUserName'];
 
+
     // update buginfo
     dbUpdateRow('BugInfo','ProjectID',"'{$PostBugInfo[ProjectID]}'",'ModuleID',"'{$PostBugInfo[ModuleID]}'",
                           'ProjectName',"'{$PostBugInfo[ProjectName]}'",'ModulePath',"'{$PostBugInfo[ModulePath]}'",
@@ -1621,8 +1622,8 @@ function testEditBug($PostBugInfo, $UploadFile = false)
                           'ReproSteps',"'{$PostBugInfo[ReproSteps]}'",
                           'AssignedTo',"'{$AssignedTo}'",'MailTo',"'{$PostBugInfo[MailTo]}'",
                           'OpenedBuild',"'{$PostBugInfo[OpenedBuild]}'",
-                          'ResolvedBy',"'{$ResolvedBy}'",'ResolvedDate',"'{$ResolvedDate}'",'ResolvedBuild',"'{$ResolvedBuild}'",'Resolution',"'{$Resolution}'",
-                          'ClosedBy',"'{$ClosedBy}'",'ClosedDate',"'{$ClosedDate}'",
+                          'ResolvedBy',"'{$ResolvedBy}'",'ResolvedDate', $ResolvedDate ? "'{$ResolvedDate}'" : 'null','ResolvedBuild',"'{$ResolvedBuild}'",'Resolution',"'{$Resolution}'",
+                          'ClosedBy',"'{$ClosedBy}'",'ClosedDate',$ClosedDate ? "'{$ClosedDate}'" : 'null',
                           'LinkID',"'{$PostBugInfo[LinkID]}'",'DuplicateID',"'{$PostBugInfo[DuplicateID]}'",
                           'CaseID',"'{$PostBugInfo[CaseID]}'",
                           'AssignedDate', "'{$PostBugInfo[AssignedDate]}'",
